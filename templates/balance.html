@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Balance</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f2f2f2;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .box{
+            width:400px;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            text-align:center;
+            box-shadow:0 0 10px rgba(0,0,0,.2);
+        }
+
+        h2{
+            color:#0066cc;
+        }
+
+        .balance{
+            font-size:30px;
+            color:green;
+            margin:20px 0;
+            font-weight:bold;
+        }
+
+        a{
+            display:inline-block;
+            padding:10px 20px;
+            background:#0066cc;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;
+        }
+
+        a:hover{
+            background:#004c99;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Account Balance</h2>
+
+    <div class="balance">
+        ₹ {{ balance }}
+    </div>
+
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

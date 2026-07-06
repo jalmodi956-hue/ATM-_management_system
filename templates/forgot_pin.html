@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot PIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="login-box">
+
+    <h2>Forgot PIN</h2>
+
+    <form method="POST">
+
+        <input type="text"
+               name="card"
+               placeholder="Enter ATM Card Number"
+               required>
+
+        <select name="security_question" required>
+            <option value="">Select Security Question</option>
+            <option value="What is your pet name?">What is your pet name?</option>
+            <option value="What is your favorite color?">What is your favorite color?</option>
+            <option value="What is your birth place?">What is your birth place?</option>
+            <option value="What is your best friend's name?">What is your best friend's name?</option>
+        </select>
+
+        <input type="text"
+               name="security_answer"
+               placeholder="Enter Security Answer"
+               required>
+
+        <input type="password"
+               name="new_pin"
+               placeholder="Enter New PIN"
+               required>
+
+        <button type="submit">Reset PIN</button>
+
+    </form>
+
+    <p>
+        <a href="/">Back to Login</a>
+    </p>
+
+</div>
+
+</body>
+</html>

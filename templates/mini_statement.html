@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Statement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="box">
+        <h2>Mini Statement</h2>
+
+        {% if data %}
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>₹ {{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No recent transactions found.</p>
+        {% endif %}
+
+        <br>
+        <a href="/dashboard" class="back">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

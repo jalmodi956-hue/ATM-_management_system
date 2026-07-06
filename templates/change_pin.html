@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change PIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="box">
+        <h2>Change PIN</h2>
+
+        <form method="POST">
+            <input type="password" name="old_pin" placeholder="Enter Old PIN" required>
+            <input type="password" name="new_pin" placeholder="Enter New PIN" required>
+            <input type="password" name="confirm_pin" placeholder="Confirm New PIN" required>
+
+            <button type="submit">Change PIN</button>
+        </form>
+
+        <br>
+        <a href="/dashboard" class="back">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Receipt</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+        }
+
+        .receipt-box{
+            width:400px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        h2{
+            color:#0066cc;
+            margin-bottom:20px;
+        }
+
+        p{
+            font-size:16px;
+            margin:10px 0;
+        }
+
+        .btn{
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 20px;
+            background:#0066cc;
+            color:white;
+            text-decoration:none;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .btn:hover{
+            background:#004b99;
+        }
+    </style>
+</head>
+<body>
+
+<div class="receipt-box">
+    <h2>ATM Transaction Receipt</h2>
+
+    <p><strong>Card Number:</strong> {{ card }}</p>
+    <p><strong>Transaction Type:</strong> {{ transaction[0] }}</p>
+    <p><strong>Amount:</strong> ₹ {{ transaction[1] }}</p>
+    <p><strong>Date:</strong> {{ transaction[2] }}</p>
+
+    <button class="btn" onclick="window.print()">Print Receipt</button>
+    <br><br>
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

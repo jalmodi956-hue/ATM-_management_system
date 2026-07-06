@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>All Users</h2>
+
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Card Number</th>
+                <th>Balance</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>unlock</th>
+            </tr>
+
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td>{{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
+                <td>₹ {{ user[4] }}</td>
+                <td><a href="/edit_user/{{ user[0] }}">Edit</a></td>
+                <td><a href="/delete_user/{{ user[0] }}" onclick="return confirm('Are you sure?')">Delete</a></td>
+                <td><a href="/unlock_user/{{ user[0] }}">Unlock</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br>
+        <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

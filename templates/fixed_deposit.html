@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Deposit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+        }
+
+        .container{
+            width:400px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        h2{
+            color:#0066cc;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        .btn{
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            background:#0066cc;
+            color:white;
+            text-decoration:none;
+            border:none;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .btn:hover{
+            background:#004b99;
+        }
+
+        p{
+            margin-top:15px;
+            font-size:16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Fixed Deposit</h2>
+
+    <form method="POST">
+        <input type="number" name="amount" placeholder="Enter FD Amount" required>
+        <input type="number" name="months" placeholder="Enter Months" required>
+
+        <button type="submit" class="btn">Create FD</button>
+    </form>
+
+    {% if maturity_amount %}
+        <p><strong>FD Created Successfully</strong></p>
+        <p>Maturity Amount: ₹ {{ maturity_amount }}</p>
+    {% endif %}
+
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

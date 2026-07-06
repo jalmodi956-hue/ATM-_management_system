@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw Money</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f2f2f2;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .box{
+            width:400px;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,.2);
+            text-align:center;
+        }
+
+        h2{
+            color:#d9534f;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:15px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+            font-size:16px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#d9534f;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#c9302c;
+        }
+
+        .back{
+            display:block;
+            margin-top:15px;
+            text-decoration:none;
+            color:#0066cc;
+        }
+
+        .back:hover{
+            text-decoration:underline;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="box">
+
+    <h2>Withdraw Money</h2>
+
+    <form method="POST">
+
+        <input
+            type="number"
+            name="amount"
+            placeholder="Enter Amount"
+            min="1"
+            step="0.01"
+            required>
+
+        <button type="submit">
+            Withdraw
+        </button>
+
+    </form>
+
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

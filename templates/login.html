@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f2f2f2;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .login-box{
+            width:350px;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,.2);
+        }
+
+        h2{
+            text-align:center;
+            color:#0066cc;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+            font-size:16px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#0066cc;
+            color:white;
+            border:none;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#004c99;
+        }
+
+        p{
+            text-align:center;
+            margin-top:15px;
+            color:#555;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="login-box">
+<img src="{{ url_for('static', filename='logo.png') }}" alt="ATM Logo" width="100">
+    <h2>ATM Login</h2>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="card"
+            placeholder="ATM Card Number"
+            required>
+
+        <input
+            type="password"
+            name="pin"
+            placeholder="PIN"
+            required>
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+    <p>
+    <a href="/forgot_pin">Forgot PIN?</a>
+    </p>
+
+    <p>
+    Don't have an account?
+    <a href="/register">Register Here</a>
+</p>
+
+    <p>Demo Card: <b>1234567890</b></p>
+    <p>PIN: <b>1234</b></p>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+        }
+
+        .container{
+            width:450px;
+            margin:50px auto;
+            background:#fff;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        h2{
+            color:#0066cc;
+            margin-bottom:15px;
+        }
+
+        h3{
+            margin:15px 0;
+            color:#333;
+        }
+
+        .balance{
+            font-size:24px;
+            color:green;
+            margin:20px 0;
+            font-weight:bold;
+        }
+
+
+        .last-login{
+            margin-bottom:20px;
+            color:#555;
+            font-size:14px;
+        }
+
+        .btn{
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            background:#0066cc;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;
+            font-size:16px;
+        }
+
+        .btn:hover{
+            background:#004b99;
+        }
+
+        .logout{
+            background:red;
+        }
+
+        .logout:hover{
+            background:darkred;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+<img src="{{ url_for('static', filename='logo.png') }}" alt="ATM Logo" width="100">
+    <h2>ATM Management System</h2>
+<button onclick="toggleDarkMode()" class="btn">Toggle Dark Mode</button>
+    <h3>Welcome, {{ name }}</h3>
+    
+    <div class="atm-card">
+    <h3>ATM Card</h3>
+    <div class="atm-card-number">{{ card }}</div>
+    <div class="atm-card-name">Card Holder: {{ name }}</div>
+    <div class="atm-card-balance">Available Balance: ₹ {{ balance }}</div>
+    <div class="atm-bank">ATM Management System</div>
+    </div>
+
+    <div class="balance">
+        Balance: ₹ {{ balance }}
+    </div>
+
+    <p class="last-login">Last Login: {{ last_login }}</p>
+
+    <p class="last-login">Login IP: {{ login_ip }}</p>
+
+    <a href="/balance" class="btn">Check Balance</a>
+
+    <a href="/deposit" class="btn">Deposit Money</a>
+
+    <a href="/fixed_deposit">Fixed Deposit</a>
+
+    <a href="/withdraw" class="btn">Withdraw Money</a>
+    
+    <a href="/fast_cash">Fast Cash</a>
+
+    <a href="/mini_statement" class="btn">Mini Statement</a>
+    
+    <a href="/account_details" class="btn">Account Details</a>
+
+    <a href="/search" class="btn">Search Transaction</a>
+
+    <a href="/receipt" class="btn">Print Receipt</a>
+
+    <a href="/history" class="btn">Transaction History</a>
+
+    <a href="/interest_calculator">Interest Calculator</a>
+
+    <a href="/download_pdf" class="btn">Download PDF Report</a>
+
+    <a href="/export_csv" class="btn">Export CSV Report</a>
+
+    <a href="/filter_transactions" class="btn">Filter Transactions by Date</a>
+
+    <a href="/profile" class="btn">My Profile</a>
+
+    <a href="/edit_profile">Edit Profile</a>
+
+    <a href="/transfer" class="btn">Money Transfer</a>
+
+    <a href="/change_pin" class="btn">Change PIN</a>
+
+    <a href="/logout" class="btn logout">Logout</a>
+
+<script>
+    function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
+</script>
+    
+</div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>My Profile</h2>
+
+    {% if user[4] %}
+        <img src="{{ url_for('static', filename='uploads/' + user[4]) }}"
+             alt="Profile Picture"
+             width="120"
+             height="120"
+             style="border-radius:50%; object-fit:cover; margin-bottom:15px;">
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>{{ user[1] }}</td>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td>{{ user[2] }}</td>
+        </tr>
+
+        <tr>
+            <th>Card Number</th>
+            <td>{{ user[0] }}</td>
+        </tr>
+
+        <tr>
+            <th>Balance</th>
+            <td>₹ {{ user[3] }}</td>
+        </tr>
+    </table>
+
+    <br>
+
+    <a href="/dashboard" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

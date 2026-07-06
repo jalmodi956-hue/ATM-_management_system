@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+
+
+    <h3>Total Users: {{ total_users }}</h3>
+    <h3>Total Balance: ₹ {{ total_balance }}</h3>
+    <h3>Total Deposits: ₹ {{ total_deposits }}</h3>
+    <h3>Total Withdrawals: ₹ {{ total_withdrawals }}</h3>
+    <h3>Total Transfers: ₹ {{ total_transfers }}</h3>
+
+
+        <a href="/all_users" class="btn">View All Users</a>
+        <a href="/add_user" class="btn">Add User</a>
+        <a href="/search_user" class="btn">Search User</a>
+        <a href="/admin_chart" class="btn">View Charts</a>
+        <a href="/logout" class="btn logout">Logout</a>
+    </div>
+
+</body>
+</html>

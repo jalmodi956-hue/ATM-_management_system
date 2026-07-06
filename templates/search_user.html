@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="box">
+        <h2>Search User</h2>
+
+        <form method="POST">
+            <input type="text" name="keyword" placeholder="Enter Name or Card Number" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <br>
+
+        {% if users %}
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Card Number</th>
+                <th>Balance</th>
+            </tr>
+
+            {% for user in users %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td>{{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
+                <td>₹ {{ user[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        <br>
+        <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

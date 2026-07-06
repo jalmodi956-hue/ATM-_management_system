@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Interest Calculator</h2>
+
+    <form method="POST">
+        <input type="number" step="0.01" name="principal" placeholder="Enter Principal Amount" required>
+        <input type="number" step="0.01" name="rate" placeholder="Enter Interest Rate (%)" required>
+        <input type="number" step="0.01" name="time" placeholder="Enter Time (Years)" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if interest is not none %}
+        <h3>Interest: ₹{{ interest }}</h3>
+        <h3>Total Amount: ₹{{ total_amount }}</h3>
+    {% endif %}
+
+    <br>
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

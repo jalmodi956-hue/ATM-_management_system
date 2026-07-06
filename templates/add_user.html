@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="box">
+        <h2>Add New User</h2>
+
+        <form method="POST">
+            <input type="text" name="name" placeholder="Enter Name" required>
+            <input type="email" name="email" placeholder="Enter Email" required>
+            <input type="text" name="card" placeholder="Enter Card Number" required>
+            <input type="password" name="pin" placeholder="Enter PIN" required>
+            <input type="number" name="balance" placeholder="Enter Balance" required>
+            <button type="submit">Add User</button>
+        </form>
+
+        <br>
+        <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
+    </div>
+
+</body>
+</html>

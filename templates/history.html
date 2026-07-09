@@ -4,96 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction History</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
-
-        body{
-            background:#f2f2f2;
-            padding:40px;
-        }
-
-        .container{
-            max-width:900px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,.2);
-        }
-
-        h2{
-            text-align:center;
-            color:#0066cc;
-            margin-bottom:20px;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        table th, table td{
-            border:1px solid #ddd;
-            padding:12px;
-            text-align:center;
-        }
-
-        table th{
-            background:#0066cc;
-            color:white;
-        }
-
-        tr:nth-child(even){
-            background:#f9f9f9;
-        }
-
-        .back{
-            display:inline-block;
-            margin-top:20px;
-            padding:10px 20px;
-            background:#0066cc;
-            color:white;
-            text-decoration:none;
-            border-radius:5px;
-        }
-
-        .back:hover{
-            background:#004c99;
-        }
-    </style>
 </head>
 <body>
 
-<div class="container">
-
+<div class="container-wide">
     <h2>Transaction History</h2>
 
-    <table>
-        <tr>
-            <th>Transaction Type</th>
-            <th>Amount (₹)</th>
-            <th>Date & Time</th>
-        </tr>
+    {% if data %}
+    <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>Transaction Type</th>
+                <th>Amount (₹)</th>
+                <th>Date & Time</th>
+            </tr>
 
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>₹ {{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-        </tr>
-        {% endfor %}
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>₹ {{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+        <p>No transaction history found.</p>
+    {% endif %}
 
-    </table>
-
-    <a href="/dashboard" class="back">Back to Dashboard</a>
-
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
 </div>
 
 </body>

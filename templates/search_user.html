@@ -8,18 +8,24 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Search User</h2>
+<div class="box">
+    <h2>Search User</h2>
 
-        <form method="POST">
-            <input type="text" name="keyword" placeholder="Enter Name or Card Number" required>
-            <button type="submit">Search</button>
-        </form>
+    <form method="POST">
+        <label for="keyword">Search by Name or Card Number</label>
+        <input
+            type="text"
+            id="keyword"
+            name="keyword"
+            placeholder="Enter Name or Card Number"
+            required
+        >
+        <button type="submit">Search</button>
+    </form>
 
-        <br>
-
-        {% if users %}
-        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+    {% if users %}
+    <div class="table-wrapper">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -38,11 +44,14 @@
             </tr>
             {% endfor %}
         </table>
-        {% endif %}
-
-        <br>
-        <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
     </div>
+
+    {% elif request.method == "POST" %}
+    <p>No user found.</p>
+    {% endif %}
+
+    <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
+</div>
 
 </body>
 </html>

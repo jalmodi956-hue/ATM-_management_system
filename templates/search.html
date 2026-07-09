@@ -8,18 +8,24 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Search Transaction</h2>
+<div class="box">
+    <h2>Search Transaction</h2>
 
-        <form method="POST">
-            <input type="text" name="keyword" placeholder="Enter transaction type (Deposit / Withdraw / Transfer)" required>
-            <button type="submit">Search</button>
-        </form>
+    <form method="POST">
+        <label for="keyword">Transaction Type</label>
+        <input
+            type="text"
+            id="keyword"
+            name="keyword"
+            placeholder="Example: Deposit / Withdraw / Money Transfer"
+            required
+        >
+        <button type="submit">Search</button>
+    </form>
 
-        <br>
-
-        {% if data %}
-        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+    {% if data %}
+    <div class="table-wrapper">
+        <table>
             <tr>
                 <th>Type</th>
                 <th>Amount</th>
@@ -34,11 +40,15 @@
             </tr>
             {% endfor %}
         </table>
-        {% endif %}
-
-        <br>
-        <a href="/dashboard" class="back">← Back to Dashboard</a>
     </div>
+
+    {% elif request.method == "POST" %}
+    <p>No matching transactions found.</p>
+    {% endif %}
+
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
+</div>
 
 </body>
 </html>
+

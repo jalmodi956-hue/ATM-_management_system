@@ -11,19 +11,43 @@
 <div class="login-box">
     <h2>Edit Profile</h2>
 
-    <form method="POST" enctype="multipart/form-data"></form>
-        <input type="text" name="name" value="{{ user[1] }}" placeholder="Full Name" required>
-        <input type="email" name="email" value="{{ user[2] }}" placeholder="Email" required>
-        <input type="file" name="profile_pic" accept="image/*">
+    <form method="POST" enctype="multipart/form-data">
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            value="{{ user[1] }}"
+            placeholder="Full Name"
+            required
+        >
 
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            value="{{ user[2] }}"
+            placeholder="Email"
+            required
+        >
+
+        <label for="profile_pic">Profile Picture</label>
+        <input
+            type="file"
+            id="profile_pic"
+            name="profile_pic"
+            accept="image/*"
+        >
 
         <button type="submit">Update Profile</button>
     </form>
 
     <p>
-        <a href="/dashboard">Back to Dashboard</a>
+        <a href="/profile">Back to Profile</a>
     </p>
 </div>
 
 </body>
 </html>
+

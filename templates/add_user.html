@@ -8,21 +8,61 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Add New User</h2>
+<div class="box">
+    <h2>Add New User</h2>
 
-        <form method="POST">
-            <input type="text" name="name" placeholder="Enter Name" required>
-            <input type="email" name="email" placeholder="Enter Email" required>
-            <input type="text" name="card" placeholder="Enter Card Number" required>
-            <input type="password" name="pin" placeholder="Enter PIN" required>
-            <input type="number" name="balance" placeholder="Enter Balance" required>
-            <button type="submit">Add User</button>
-        </form>
+    <form method="POST">
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter Name"
+            required
+        >
 
-        <br>
-        <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
-    </div>
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter Email"
+            required
+        >
+
+        <label for="card">Card Number</label>
+        <input
+            type="text"
+            id="card"
+            name="card"
+            placeholder="Enter Card Number"
+            required
+        >
+
+        <label for="pin">PIN</label>
+        <input
+            type="password"
+            id="pin"
+            name="pin"
+            placeholder="Enter PIN"
+            required
+        >
+
+        <label for="balance">Balance</label>
+        <input
+            type="number"
+            id="balance"
+            name="balance"
+            placeholder="Enter Balance"
+            step="0.01"
+            required
+        >
+
+        <button type="submit">Add User</button>
+    </form>
+
+    <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
+</div>
 
 </body>
 </html>

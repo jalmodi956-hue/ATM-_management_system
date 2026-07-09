@@ -8,11 +8,12 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Mini Statement</h2>
+<div class="box">
+    <h2>Mini Statement</h2>
 
-        {% if data %}
-        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+    {% if data %}
+    <div class="table-wrapper">
+        <table>
             <tr>
                 <th>Type</th>
                 <th>Amount</th>
@@ -27,13 +28,13 @@
             </tr>
             {% endfor %}
         </table>
-        {% else %}
-            <p>No recent transactions found.</p>
-        {% endif %}
-
-        <br>
-        <a href="/dashboard" class="back">← Back to Dashboard</a>
     </div>
+    {% else %}
+        <p>No recent transactions found.</p>
+    {% endif %}
+
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
+</div>
 
 </body>
 </html>

@@ -5,87 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filter Transactions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f4f4;
-        }
-
-        .container{
-            width:700px;
-            margin:50px auto;
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            box-shadow:0 0 15px rgba(0,0,0,0.2);
-            text-align:center;
-        }
-
-        input{
-            padding:10px;
-            margin:10px;
-            width:200px;
-        }
-
-        .btn{
-            padding:10px 20px;
-            background:#0066cc;
-            color:white;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-            text-decoration:none;
-        }
-
-        table{
-            width:100%;
-            margin-top:20px;
-            border-collapse:collapse;
-        }
-
-        th, td{
-            border:1px solid #ddd;
-            padding:10px;
-            text-align:center;
-        }
-
-        th{
-            background:#0066cc;
-            color:white;
-        }
-    </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-wide">
     <h2>Filter Transactions by Date</h2>
 
     <form method="POST">
-        <input type="date" name="start_date" required>
-        <input type="date" name="end_date" required>
-        <button type="submit" class="btn">Filter</button>
+        <label for="start_date">Start Date</label>
+        <input
+            type="date"
+            id="start_date"
+            name="start_date"
+            required
+        >
+
+        <label for="end_date">End Date</label>
+        <input
+            type="date"
+            id="end_date"
+            name="end_date"
+            required
+        >
+
+        <button type="submit">Filter</button>
     </form>
 
     {% if transactions %}
-    <table>
-        <tr>
-            <th>Transaction Type</th>
-            <th>Amount</th>
-            <th>Date</th>
-        </tr>
+    <div class="table-wrapper">
+        <table>
+            <tr>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
 
-        {% for t in transactions %}
-        <tr>
-            <td>{{ t[0] }}</td>
-            <td>₹ {{ t[1] }}</td>
-            <td>{{ t[2] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t[0] }}</td>
+                <td>₹ {{ t[1] }}</td>
+                <td>{{ t[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% elif request.method == "POST" %}
+        <p>No transactions found for the selected date range.</p>
     {% endif %}
 
-    <br>
-    <a href="/dashboard" class="btn">Back to Dashboard</a>
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
 </div>
 
 </body>

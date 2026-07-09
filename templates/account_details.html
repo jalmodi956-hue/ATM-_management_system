@@ -8,31 +8,30 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Account Details</h2>
+<div class="box">
+    <h2>Account Details</h2>
 
-        <table border="1" cellpadding="10" cellspacing="0" width="100%">
-            <tr>
-                <th>Name</th>
-                <td>{{ user[0] }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user[1] }}</td>
-            </tr>
-            <tr>
-                <th>Card Number</th>
-                <td>{{ user[2] }}</td>
-            </tr>
-            <tr>
-                <th>Balance</th>
-                <td>₹ {{ user[3] }}</td>
-            </tr>
-        </table>
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>{{ user[0] }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user[1] }}</td>
+        </tr>
+        <tr>
+            <th>Card Number</th>
+            <td>{{ user[2] }}</td>
+        </tr>
+        <tr>
+            <th>Balance</th>
+            <td>₹ {{ user[3] }}</td>
+        </tr>
+    </table>
 
-        <br>
-        <a href="/dashboard" class="back">← Back to Dashboard</a>
-    </div>
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
+</div>
 
 </body>
 </html>

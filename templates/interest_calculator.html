@@ -12,20 +12,46 @@
     <h2>Interest Calculator</h2>
 
     <form method="POST">
-        <input type="number" step="0.01" name="principal" placeholder="Enter Principal Amount" required>
-        <input type="number" step="0.01" name="rate" placeholder="Enter Interest Rate (%)" required>
-        <input type="number" step="0.01" name="time" placeholder="Enter Time (Years)" required>
+        <label for="principal">Principal Amount</label>
+        <input
+            type="number"
+            step="0.01"
+            id="principal"
+            name="principal"
+            placeholder="Enter Principal Amount"
+            required
+        >
+
+        <label for="rate">Interest Rate (%)</label>
+        <input
+            type="number"
+            step="0.01"
+            id="rate"
+            name="rate"
+            placeholder="Enter Interest Rate"
+            required
+        >
+
+        <label for="time">Time (Years)</label>
+        <input
+            type="number"
+            step="0.01"
+            id="time"
+            name="time"
+            placeholder="Enter Time in Years"
+            required
+        >
 
         <button type="submit">Calculate</button>
     </form>
 
     {% if interest is not none %}
-        <h3>Interest: ₹{{ interest }}</h3>
-        <h3>Total Amount: ₹{{ total_amount }}</h3>
+        <hr>
+        <h3>Interest: ₹ {{ interest }}</h3>
+        <h3>Total Amount: ₹ {{ total_amount }}</h3>
     {% endif %}
 
-    <br>
-    <a href="/dashboard">Back to Dashboard</a>
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
 </div>
 
 </body>

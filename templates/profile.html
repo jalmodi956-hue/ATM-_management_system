@@ -4,52 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="container">
-
+<div class="profile-box">
     <h2>My Profile</h2>
 
     {% if user[4] %}
-        <img src="{{ url_for('static', filename='uploads/' + user[4]) }}"
-             alt="Profile Picture"
-             width="120"
-             height="120"
-             style="border-radius:50%; object-fit:cover; margin-bottom:15px;">
+        <img src="{{ url_for('static', filename='uploads/' + user[4]) }}" alt="Profile Picture">
+    {% else %}
+        <p>No profile picture uploaded.</p>
     {% endif %}
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <td>{{ user[1] }}</td>
-        </tr>
+    <div class="profile-details">
+        <p><strong>Name:</strong> {{ user[1] }}</p>
+        <p><strong>Email:</strong> {{ user[2] }}</p>
+        <p><strong>Card Number:</strong> {{ user[0] }}</p>
+        <p><strong>Balance:</strong> ₹ {{ user[3] }}</p>
+    </div>
 
-        <tr>
-            <th>Email</th>
-            <td>{{ user[2] }}</td>
-        </tr>
-
-        <tr>
-            <th>Card Number</th>
-            <td>{{ user[0] }}</td>
-        </tr>
-
-        <tr>
-            <th>Balance</th>
-            <td>₹ {{ user[3] }}</td>
-        </tr>
-    </table>
-
-    <br>
-
-    <a href="/dashboard" class="back">
-        ← Back to Dashboard
-    </a>
-
+    <div class="btn-row">
+        <a href="/edit_profile" class="btn">Edit Profile</a>
+        <a href="/dashboard" class="btn btn-dark">Back to Dashboard</a>
+    </div>
 </div>
 
 </body>
 </html>
+

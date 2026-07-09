@@ -4,62 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Registration</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="login-box">
-
     <h2>Create ATM Account</h2>
 
     <form method="POST">
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter Full Name"
+            required
+        >
 
-        <input type="text"
-               name="name"
-               placeholder="Full Name"
-               required>
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter Email Address"
+            required
+        >
 
-        <input type="email"
-               name="email"
-               placeholder="Email Address"
-               required>
+        <label for="card">ATM Card Number</label>
+        <input
+            type="text"
+            id="card"
+            name="card"
+            placeholder="Enter 12 Digit ATM Card Number"
+            maxlength="12"
+            required
+        >
 
-        <input type="text"
-               name="card"
-               placeholder="ATM Card Number"
-               maxlength="12"
-               required>
+        <label for="pin">PIN</label>
+        <input
+            type="password"
+            id="pin"
+            name="pin"
+            placeholder="Enter PIN"
+            required
+        >
 
-        <input type="password"
-               name="pin"
-               placeholder="PIN"
-               required>
+        <label for="security_question">Security Question</label>
+        <select id="security_question" name="security_question" required>
+            <option value="">Select Security Question</option>
+            <option value="What is your pet name?">What is your pet name?</option>
+            <option value="What is your favorite color?">What is your favorite color?</option>
+            <option value="What is your birth place?">What is your birth place?</option>
+            <option value="What is your best friend's name?">What is your best friend's name?</option>
+        </select>
 
-        <button type="submit">
-            Register
-        </button>
+        <label for="security_answer">Security Answer</label>
+        <input
+            type="text"
+            id="security_answer"
+            name="security_answer"
+            placeholder="Enter Security Answer"
+            required
+        >
 
-    <select name="security_question" required>
-        <option value="">Select Security Question</option>
-        <option value="What is your pet name?">What is your pet name?</option>
-        <option value="What is your favorite color?">What is your favorite color?</option>
-        <option value="What is your birth place?">What is your birth place?</option>
-        <option value="What is your best friend's name?">What is your best friend's name?</option>
-    </select>
-
-        <input type="text"
-        name="security_answer"
-        placeholder="Security Answer"
-        required>
-
+        <button type="submit">Register</button>
     </form>
 
     <p>
         Already have an account?
         <a href="/">Login Here</a>
     </p>
-
 </div>
 
 </body>

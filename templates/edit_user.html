@@ -8,21 +8,61 @@
 </head>
 <body>
 
-    <div class="box">
-        <h2>Edit User</h2>
+<div class="box">
+    <h2>Edit User</h2>
 
-        <form method="POST">
-            <input type="text" name="name" value="{{ user[1] }}" required>
-            <input type="email" name="email" value="{{ user[2] }}" required>
-            <input type="text" name="card" value="{{ user[3] }}" required>
-            <input type="password" name="pin" value="{{ user[4] }}" required>
-            <input type="number" name="balance" value="{{ user[5] }}" required>
-            <button type="submit">Update User</button>
-        </form>
+    <form method="POST">
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            value="{{ user[3] }}"
+            required
+        >
 
-        <br>
-        <a href="/all_users" class="back">← Back to All Users</a>
-    </div>
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            value="{{ user[4] }}"
+            required
+        >
+
+        <label for="card">Card Number</label>
+        <input
+            type="text"
+            id="card"
+            name="card"
+            value="{{ user[1] }}"
+            required
+        >
+
+        <label for="pin">New PIN</label>
+        <input
+            type="password"
+            id="pin"
+            name="pin"
+            placeholder="Enter New PIN"
+            required
+        >
+
+        <label for="balance">Balance</label>
+        <input
+            type="number"
+            id="balance"
+            name="balance"
+            value="{{ user[5] }}"
+            step="0.01"
+            required
+        >
+
+        <button type="submit">Update User</button>
+    </form>
+
+    <a href="/all_users" class="back">← Back to All Users</a>
+</div>
 
 </body>
 </html>

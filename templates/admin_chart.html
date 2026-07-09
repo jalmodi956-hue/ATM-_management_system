@@ -5,57 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Charts</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f4f4;
-        }
-
-        .container{
-            width:700px;
-            margin:50px auto;
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            box-shadow:0 0 15px rgba(0,0,0,0.2);
-            text-align:center;
-        }
-
-        h2{
-            color:#0066cc;
-            margin-bottom:20px;
-        }
-
-        img{
-            width:100%;
-            max-width:600px;
-            margin-top:20px;
-        }
-
-        .btn{
-            display:inline-block;
-            margin-top:20px;
-            padding:12px 20px;
-            background:#0066cc;
-            color:white;
-            text-decoration:none;
-            border-radius:5px;
-        }
-
-        .btn:hover{
-            background:#004b99;
-        }
-    </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-wide">
     <h2>ATM Transaction Chart</h2>
 
-    <img src="{{ url_for('static', filename='chart.png') }}" alt="ATM Chart">
+    <img
+        src="{{ url_for('static', filename='chart.png') }}"
+        alt="ATM Chart"
+        class="chart-image"
+    >
 
-    <br>
-    <a href="/admin_dashboard" class="btn">Back to Admin Dashboard</a>
+    <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
 </div>
 
 </body>

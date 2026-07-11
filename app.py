@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, session, send_file
-import sqlite3
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from reportlab.pdfgen import canvas
 from werkzeug.utils import secure_filename
+
+import sqlite3
 import os
 import csv
 import smtplib
@@ -17,7 +18,10 @@ app.permanent_session_lifetime = timedelta(minutes=10)
 # CONFIG
 # =========================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, "database.db")
+if os.environ.get("VERCEL"):
+    DATABASE = "/tmp/database.db"
+else:
+    DATABASE = os.path.join(BASE_DIR, "database.db")
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER

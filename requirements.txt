@@ -1,6 +1,6 @@
 Flask
-Werkzeug
 psycopg2-binary
+Werkzeug
 reportlab
 matplotlib
-gunicorn
+python-dotenv

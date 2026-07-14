@@ -3,20 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Student ATM Simulation | Educational Project</title>
 
-    <title>
-        ATM Login | ATM Management System
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -24,147 +15,149 @@
 <nav class="navbar">
 
     <div class="logo">
-        🏧 ATM System
+        🏧 ATM Management System
     </div>
 
     <div>
-        <a href="{{ url_for('login') }}">
-            Login
-        </a>
-
-        <a href="{{ url_for('register') }}">
-            Register
-        </a>
-
-        <a href="{{ url_for('admin_login') }}">
-            Admin Login
-        </a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('admin_login') }}">Admin Login</a>
     </div>
 
 </nav>
 
-
 <div class="login-container">
 
-    <h1>
-        🏦 ATM Login
-    </h1>
+    <h1>🏧 Student ATM Simulation</h1>
 
-    <p class="text-center text-muted mb-2">
-        Login securely to access your
-        ATM account.
+    <p class="text-center">
+        Educational ATM Management System created for learning purposes.
     </p>
 
+    <div class="alert alert-info">
+        <strong>📘 Student Project Notice</strong><br><br>
 
-    <form
-        method="POST"
-        action="{{ url_for('login') }}"
-        id="loginForm"
-    >
+        This website is a Computer Engineering student project created for
+        educational purposes only.
+
+        <br><br>
+
+        It is NOT affiliated with any bank, ATM provider,
+        financial institution, Google, Microsoft or any government
+        organization.
+
+        <br><br>
+
+        Please use only demo credentials created during registration.
+        Do not enter your real ATM card number or real banking PIN.
+    </div>
+
+    <form method="POST"
+          action="{{ url_for('login') }}"
+          id="loginForm">
 
         <div class="form-group">
 
             <label for="card">
-                Card Number
+                Demo Card Number
             </label>
 
             <input
                 type="text"
                 id="card"
                 name="card"
-                placeholder="Enter your card number"
+                placeholder="Enter Demo Card Number"
                 autocomplete="username"
                 inputmode="numeric"
                 pattern="[0-9]+"
                 maxlength="19"
                 required
-                autofocus
-            >
+                autofocus>
 
         </div>
-
 
         <div class="form-group">
 
             <label for="pin">
-                PIN
+                Demo PIN
             </label>
 
             <input
                 type="password"
                 id="pin"
                 name="pin"
-                placeholder="Enter 4 to 6 digit PIN"
+                placeholder="Enter Demo PIN"
                 autocomplete="current-password"
                 inputmode="numeric"
                 pattern="[0-9]{4,6}"
                 minlength="4"
                 maxlength="6"
-                required
-            >
+                required>
 
         </div>
 
-
-        <div class="alert alert-info">
-            🔐 Your PIN is securely protected
-            using password hashing.
+        <div class="alert alert-success">
+            🔒 Passwords and PINs are securely hashed inside this educational project.
         </div>
-
 
         <div class="alert alert-warning">
-            ⚠️ Multiple incorrect PIN attempts
-            may lock your ATM account.
+            ⚠️ This login is only for this project.
+            Never enter your real ATM PIN or banking credentials.
         </div>
-
 
         <button
             type="submit"
-            class="btn btn-block"
-        >
-            🔐 Login to ATM
+            class="btn btn-block">
+            🔐 Login
         </button>
 
     </form>
 
-
     <div class="auth-link">
-
         <a href="{{ url_for('forgot_pin') }}">
-            🔑 Forgot PIN?
+            Forgot Demo PIN?
         </a>
-
     </div>
 
-
     <div class="auth-link">
-
         Don't have an account?
-
         <a href="{{ url_for('register') }}">
-            Create Account
+            Register
         </a>
-
     </div>
 
-
     <div class="auth-link">
-
-        ATM Administrator?
-
+        Administrator?
         <a href="{{ url_for('admin_login') }}">
             Admin Login
         </a>
+    </div>
+
+    <hr>
+
+    <div class="text-center">
+
+        <small>
+
+            © 2026 ATM Management System Student Project
+
+            <br><br>
+
+            This website is developed only for educational and demonstration
+            purposes.
+
+            <br>
+
+            It is not connected to any real ATM network,
+            bank or financial institution.
+
+        </small>
 
     </div>
 
 </div>
 
-
-<script
-    src="{{ url_for('static', filename='script.js') }}"
-></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
-
 </html>

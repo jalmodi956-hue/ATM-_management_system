@@ -138,18 +138,19 @@ os.makedirs(
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-
 # ==================================================
 # DATABASE CONNECTION
 # ==================================================
 
 def get_conn():
+    if not DATABASE_URL:
+        raise RuntimeError("DATABASE_URL environment variable is missing")
 
     return psycopg2.connect(
         DATABASE_URL,
-        sslmode="require"
+        sslmode="require",
+        connect_timeout=10
     )
-
 
 # ==================================================
 # CURRENT DATE TIME

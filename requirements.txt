@@ -3,3 +3,4 @@ reportlab
 matplotlib
 Werkzeug
 psycopg2-binary
+reportlab

@@ -22,14 +22,17 @@ import uuid
 from dotenv import load_dotenv
 
 load_dotenv()
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 from email.mime.text import MIMEText
 
 
 # ==================================================
 # FLASK APPLICATION
 # ==================================================
-
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = SECRET_KEY
 
 # ==================================================
 # ENVIRONMENT CONFIGURATION

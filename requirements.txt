@@ -1,6 +1,9 @@
 Flask
+Flask-SQLAlchemy
+SQLAlchemy
 psycopg2-binary
 Werkzeug
 reportlab
 matplotlib
 python-dotenv
+gunicorn

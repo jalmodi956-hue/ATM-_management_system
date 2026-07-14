@@ -1,22 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Balance</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Account Balance | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Account Balance</h2>
+<nav class="navbar">
 
-    <div class="balance">
-        ₹ {{ balance }}
+    <div class="logo">
+        🏧 ATM System
     </div>
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('deposit') }}">
+            Deposit
+        </a>
+
+        <a href="{{ url_for('withdraw') }}">
+            Withdraw
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        💳 Account Balance
+    </h1>
+
+
+    <section class="balance-card">
+
+        <h2>
+            💰 Available Balance
+        </h2>
+
+        <div class="balance-amount">
+            ₹{{ "%.2f"|format(balance) }}
+        </div>
+
+        <p>
+            Your current ATM account
+            available balance.
+        </p>
+
+    </section>
+
+
+    <div class="alert alert-info text-center">
+        ℹ️ Your balance is automatically updated
+        after every deposit, withdrawal,
+        transfer and fixed deposit transaction.
+    </div>
+
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('deposit') }}"
+            class="btn btn-success"
+        >
+            💰 Deposit Money
+        </a>
+
+
+        <a
+            href="{{ url_for('withdraw') }}"
+            class="btn btn-danger"
+        >
+            💸 Withdraw Money
+        </a>
+
+
+        <a
+            href="{{ url_for('fast_cash') }}"
+            class="btn btn-warning"
+        >
+            ⚡ Fast Cash
+        </a>
+
+
+        <a
+            href="{{ url_for('transfer') }}"
+            class="btn btn-info"
+        >
+            💳 Money Transfer
+        </a>
+
+
+        <a
+            href="{{ url_for('mini_statement') }}"
+            class="btn btn-success"
+        >
+            📄 Mini Statement
+        </a>
+
+
+        <a
+            href="{{ url_for('history') }}"
+            class="btn"
+        >
+            📜 Transaction History
+        </a>
+
+
+        <a
+            href="{{ url_for('account_details') }}"
+            class="btn btn-info"
+        >
+            🏦 Account Details
+        </a>
+
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

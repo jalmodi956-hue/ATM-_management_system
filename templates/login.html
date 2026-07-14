@@ -1,56 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATM Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ATM Login | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="login-box">
-    <div style="text-align:center;">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="ATM Logo" width="100">
+<nav class="navbar">
+
+    <div class="logo">
+        🏧 ATM System
     </div>
 
-    <h2>ATM Login</h2>
+    <div>
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
 
-    <form method="POST">
-        <label for="card">ATM Card Number</label>
-        <input
-            type="text"
-            id="card"
-            name="card"
-            placeholder="Enter ATM Card Number"
-            required
+        <a href="{{ url_for('register') }}">
+            Register
+        </a>
+
+        <a href="{{ url_for('admin_login') }}">
+            Admin Login
+        </a>
+    </div>
+
+</nav>
+
+
+<div class="login-container">
+
+    <h1>
+        🏦 ATM Login
+    </h1>
+
+    <p class="text-center text-muted mb-2">
+        Login securely to access your
+        ATM account.
+    </p>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('login') }}"
+        id="loginForm"
+    >
+
+        <div class="form-group">
+
+            <label for="card">
+                Card Number
+            </label>
+
+            <input
+                type="text"
+                id="card"
+                name="card"
+                placeholder="Enter your card number"
+                autocomplete="username"
+                inputmode="numeric"
+                pattern="[0-9]+"
+                maxlength="19"
+                required
+                autofocus
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="pin">
+                PIN
+            </label>
+
+            <input
+                type="password"
+                id="pin"
+                name="pin"
+                placeholder="Enter 4 to 6 digit PIN"
+                autocomplete="current-password"
+                inputmode="numeric"
+                pattern="[0-9]{4,6}"
+                minlength="4"
+                maxlength="6"
+                required
+            >
+
+        </div>
+
+
+        <div class="alert alert-info">
+            🔐 Your PIN is securely protected
+            using password hashing.
+        </div>
+
+
+        <div class="alert alert-warning">
+            ⚠️ Multiple incorrect PIN attempts
+            may lock your ATM account.
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-block"
         >
+            🔐 Login to ATM
+        </button>
 
-        <label for="pin">PIN</label>
-        <input
-            type="password"
-            id="pin"
-            name="pin"
-            placeholder="Enter PIN"
-            required
-        >
-
-        <button type="submit">Login</button>
     </form>
 
-    <p>
-        <a href="/forgot_pin">Forgot PIN?</a>
-    </p>
 
-    <p>
+    <div class="auth-link">
+
+        <a href="{{ url_for('forgot_pin') }}">
+            🔑 Forgot PIN?
+        </a>
+
+    </div>
+
+
+    <div class="auth-link">
+
         Don't have an account?
-        <a href="/register">Register Here</a>
-    </p>
 
-    <hr>
+        <a href="{{ url_for('register') }}">
+            Create Account
+        </a>
 
-    <p><strong>Demo Card:</strong> 246450307052</p>
-    <p><strong>PIN:</strong> #Rm_54321</p>
+    </div>
+
+
+    <div class="auth-link">
+
+        ATM Administrator?
+
+        <a href="{{ url_for('admin_login') }}">
+            Admin Login
+        </a>
+
+    </div>
+
 </div>
 
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
 </body>
+
 </html>

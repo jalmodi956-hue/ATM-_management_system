@@ -1,61 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filter Transactions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Filter Transactions | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="container-wide">
-    <h2>Filter Transactions by Date</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="start_date">Start Date</label>
-        <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            required
-        >
-
-        <label for="end_date">End Date</label>
-        <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            required
-        >
-
-        <button type="submit">Filter</button>
-    </form>
-
-    {% if transactions %}
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th>Transaction Type</th>
-                <th>Amount</th>
-                <th>Date</th>
-            </tr>
-
-            {% for t in transactions %}
-            <tr>
-                <td>{{ t[0] }}</td>
-                <td>₹ {{ t[1] }}</td>
-                <td>{{ t[2] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="logo">
+        🏧 ATM System
     </div>
 
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('search') }}">
+            Search
+        </a>
+
+        <a href="{{ url_for('mini_statement') }}">
+            Mini Statement
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        📅 Filter Transactions
+    </h1>
+
+
+    <div class="form-container">
+
+        <p class="text-center text-muted mb-2">
+            Select a start date and end date
+            to view transactions.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('filter_transactions') }}"
+            id="filterTransactionForm"
+        >
+
+            <div class="form-group">
+
+                <label for="start_date">
+                    Start Date
+                </label>
+
+                <input
+                    type="date"
+                    id="start_date"
+                    name="start_date"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="end_date">
+                    End Date
+                </label>
+
+                <input
+                    type="date"
+                    id="end_date"
+                    name="end_date"
+                    required
+                >
+
+            </div>
+
+
+            <div class="alert alert-info">
+                📅 Start date cannot be after
+                the end date.
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success btn-block"
+            >
+                🔍 Filter Transactions
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if transactions %}
+
+    <div class="table-container">
+
+        <input
+            type="search"
+            id="tableSearch"
+            placeholder="Search filtered transactions..."
+            autocomplete="off"
+            class="mb-2"
+        >
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>No.</th>
+                    <th>Reference ID</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in transactions %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="reference-id">
+                            {{ row[0] or "-" }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if row[1] == "Deposit" %}
+
+                        <span class="badge badge-success">
+                            💰 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] in [
+                            "Withdraw",
+                            "Fast Cash Withdraw"
+                        ] %}
+
+                        <span class="badge badge-danger">
+                            💸 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] in [
+                            "Money Transfer Sent",
+                            "Money Transfer Received"
+                        ] %}
+
+                        <span class="badge badge-info">
+                            💳 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] == "Fixed Deposit" %}
+
+                        <span class="badge badge-purple">
+                            📈 {{ row[1] }}
+                        </span>
+
+
+                        {% else %}
+
+                        <span class="badge badge-warning">
+                            {{ row[1] }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="font-bold">
+                        ₹{{ "%.2f"|format(row[2]) }}
+                    </td>
+
+
+                    <td>
+                        {{ row[3] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
     {% elif request.method == "POST" %}
-        <p>No transactions found for the selected date range.</p>
+
+    <div class="empty-state">
+
+        <h3>
+            📭 No Transactions Found
+        </h3>
+
+        <p>
+            No transactions were found for
+            the selected date range.
+        </p>
+
+    </div>
+
     {% endif %}
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('history') }}"
+            class="btn btn-info"
+        >
+            📜 Full History
+        </a>
+
+
+        <a
+            href="{{ url_for('search') }}"
+            class="btn btn-warning"
+        >
+            🔍 Search Transaction
+        </a>
+
+
+        <a
+            href="{{ url_for('mini_statement') }}"
+            class="btn btn-success"
+        >
+            📄 Mini Statement
+        </a>
+
+
+        <a
+            href="{{ url_for('export_csv') }}"
+            class="btn"
+        >
+            📊 Export CSV
+        </a>
+
+
+        <a
+            href="{{ url_for('download_pdf') }}"
+            class="btn btn-danger"
+        >
+            📄 Download PDF
+        </a>
+
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

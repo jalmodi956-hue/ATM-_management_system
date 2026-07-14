@@ -1,49 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change PIN</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Change PIN | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Change PIN</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="old_pin">Old PIN</label>
-        <input
-            type="password"
-            id="old_pin"
-            name="old_pin"
-            placeholder="Enter Old PIN"
-            required
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Profile
+        </a>
+
+        <a href="{{ url_for('account_details') }}">
+            Account
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        🔐 Change ATM PIN
+    </h1>
+
+
+    <div class="form-container">
+
+        <p class="text-center text-muted mb-2">
+            Verify your current PIN and create
+            a new secure ATM PIN.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('change_pin') }}"
+            id="changePinForm"
         >
 
-        <label for="new_pin">New PIN</label>
-        <input
-            type="password"
-            id="new_pin"
-            name="new_pin"
-            placeholder="Enter New PIN"
-            required
-        >
+            <div class="form-group">
 
-        <label for="confirm_pin">Confirm New PIN</label>
-        <input
-            type="password"
-            id="confirm_pin"
-            name="confirm_pin"
-            placeholder="Confirm New PIN"
-            required
-        >
+                <label for="old_pin">
+                    Current PIN
+                </label>
 
-        <button type="submit">Change PIN</button>
-    </form>
+                <input
+                    type="password"
+                    id="old_pin"
+                    name="old_pin"
+                    placeholder="Enter current PIN"
+                    autocomplete="current-password"
+                    inputmode="numeric"
+                    pattern="[0-9]{4,6}"
+                    minlength="4"
+                    maxlength="6"
+                    required
+                    autofocus
+                >
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="new_pin">
+                    New PIN
+                </label>
+
+                <input
+                    type="password"
+                    id="new_pin"
+                    name="new_pin"
+                    placeholder="Enter 4 to 6 digit new PIN"
+                    autocomplete="new-password"
+                    inputmode="numeric"
+                    pattern="[0-9]{4,6}"
+                    minlength="4"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="confirm_pin">
+                    Confirm New PIN
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_pin"
+                    name="confirm_pin"
+                    placeholder="Confirm new PIN"
+                    autocomplete="new-password"
+                    inputmode="numeric"
+                    pattern="[0-9]{4,6}"
+                    minlength="4"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <div class="alert alert-warning">
+                ⚠️ Your new PIN must be different
+                from your current PIN.
+            </div>
+
+
+            <div class="alert alert-info">
+                🔐 PIN must contain only
+                4 to 6 numeric digits.
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success btn-block"
+            >
+                🔐 Change PIN
+            </button>
+
+        </form>
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('profile') }}"
+                class="btn btn-info"
+            >
+                👤 My Profile
+            </a>
+
+
+            <a
+                href="{{ url_for('account_details') }}"
+                class="btn btn-warning"
+            >
+                🏦 Account Details
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

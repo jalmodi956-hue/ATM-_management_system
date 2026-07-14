@@ -1,40 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Statement</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Mini Statement | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Mini Statement</h2>
+<nav class="navbar">
+
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        📄 Mini Statement
+    </h1>
+
+
+    <div class="alert alert-info text-center">
+        ℹ️ Showing your latest 5 transactions.
+    </div>
+
 
     {% if data %}
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Date</th>
-            </tr>
 
-            {% for row in data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>₹ {{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-            </tr>
-            {% endfor %}
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>No.</th>
+                    <th>Reference ID</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in data %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        <span class="reference-id">
+                            {{ row[0] or "-" }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{ row[1] }}
+                    </td>
+
+                    <td class="font-bold">
+                        ₹{{ "%.2f"|format(row[2]) }}
+                    </td>
+
+                    <td>
+                        {{ row[3] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
         </table>
+
     </div>
+
+
     {% else %}
-        <p>No recent transactions found.</p>
+
+    <div class="empty-state">
+
+        <h3>
+            📭 No Transactions Found
+        </h3>
+
+        <p>
+            You have not completed any
+            transactions yet.
+        </p>
+
+    </div>
+
     {% endif %}
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+
+    <div class="button-group">
+
+        {% if data %}
+
+        <a
+            href="{{ url_for('receipt') }}"
+            class="btn btn-success"
+        >
+            🧾 Latest Receipt
+        </a>
+
+        {% endif %}
+
+
+        <a
+            href="{{ url_for('history') }}"
+            class="btn btn-info"
+        >
+            📜 Full Transaction History
+        </a>
+
+
+        <a
+            href="{{ url_for('download_pdf') }}"
+            class="btn btn-warning"
+        >
+            📄 Download PDF Report
+        </a>
+
+
+        <a
+            href="{{ url_for('export_csv') }}"
+            class="btn"
+        >
+            📊 Export CSV
+        </a>
+
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

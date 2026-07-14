@@ -1,33 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit Money</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Deposit Money | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Deposit Money</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="amount">Deposit Amount</label>
-        <input
-            type="number"
-            id="amount"
-            name="amount"
-            placeholder="Enter Deposit Amount"
-            min="1"
-            step="0.01"
-            required
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('mini_statement') }}">
+            Mini Statement
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        💰 Deposit Money
+    </h1>
+
+
+    <div class="form-container">
+
+        <p class="text-center text-muted mb-2">
+            Enter the amount you want to
+            deposit into your ATM account.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('deposit') }}"
+            id="depositForm"
         >
 
-        <button type="submit">Deposit</button>
-    </form>
+            <div class="form-group">
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+                <label for="amount">
+                    Deposit Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    min="1"
+                    step="0.01"
+                    placeholder="Enter deposit amount"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <div class="alert alert-info">
+                💳 The deposited amount will be
+                added to your available account balance.
+            </div>
+
+
+            <div class="alert alert-warning">
+                ⚠️ Please verify the deposit amount
+                before confirming the transaction.
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success btn-block"
+            >
+                💰 Deposit Money
+            </button>
+
+        </form>
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('balance') }}"
+                class="btn btn-info"
+            >
+                💳 Check Balance
+            </a>
+
+
+            <a
+                href="{{ url_for('receipt') }}"
+                class="btn btn-success"
+            >
+                🧾 Latest Receipt
+            </a>
+
+
+            <a
+                href="{{ url_for('mini_statement') }}"
+                class="btn btn-warning"
+            >
+                📄 Mini Statement
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="btn"
+            >
+                📜 Transaction History
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

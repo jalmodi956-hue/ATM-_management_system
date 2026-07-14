@@ -1,24 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATM Charts</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
 
-<div class="container-wide">
-    <h2>ATM Transaction Chart</h2>
-
-    <img
-        src="{{ url_for('static', filename='chart.png') }}"
-        alt="ATM Chart"
-        class="chart-image"
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
 
-    <a href="/admin_dashboard" class="back">← Back to Admin Dashboard</a>
-</div>
+    <title>
+        Transaction Analytics | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🏧 ATM Admin
+    </div>
+
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('all_users') }}">
+            All Users
+        </a>
+
+        <a href="{{ url_for('search_user') }}">
+            Search User
+        </a>
+
+        <a href="{{ url_for('admin_logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        📊 ATM Transaction Analytics
+    </h1>
+
+
+    <div class="alert alert-info text-center">
+        📈 Deposit and withdrawal transaction analytics.
+    </div>
+
+
+    <div class="chart-container">
+
+        <h2>
+            💰 Deposit vs Withdrawal Chart
+        </h2>
+
+        <p class="text-center text-muted mb-2">
+            Visual overview of ATM deposit
+            and withdrawal transactions.
+        </p>
+
+
+        <img
+            src="{{ url_for('admin_chart_image') }}"
+            alt="ATM Deposit and Withdrawal Transaction Chart"
+            class="admin-chart"
+            id="adminTransactionChart"
+        >
+
+
+        <div
+            id="chartError"
+            class="empty-state hidden"
+        >
+
+            <h3>
+                📊 Chart Not Available
+            </h3>
+
+            <p>
+                Transaction chart could not be loaded.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="alert alert-warning text-center">
+        ⚠️ Analytics data is generated from
+        recorded ATM transactions.
+    </div>
+
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+        <a
+            href="{{ url_for('all_users') }}"
+            class="btn btn-info"
+        >
+            👥 View All Users
+        </a>
+
+
+        <a
+            href="{{ url_for('search_user') }}"
+            class="btn btn-warning"
+        >
+            🔍 Search User
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_logout') }}"
+            class="btn btn-danger"
+        >
+            🚪 Admin Logout
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+    🏧 ATM Management System — Transaction Analytics
+</footer>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chart =
+        document.getElementById("adminTransactionChart");
+
+    const chartError =
+        document.getElementById("chartError");
+
+
+    if (!chart || !chartError) {
+        return;
+    }
+
+
+    chart.addEventListener("error", function () {
+
+        chart.classList.add("hidden");
+
+        chartError.classList.remove("hidden");
+
+    });
+
+});
+
+</script>
 
 </body>
+
 </html>

@@ -1,80 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATM Registration</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Register | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="login-box">
-    <h2>Create ATM Account</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="name">Full Name</label>
-        <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter Full Name"
-            required
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+
+        <a href="{{ url_for('admin_login') }}">
+            Admin
+        </a>
+    </div>
+
+</nav>
+
+
+<div class="register-container">
+
+    <h1>
+        🏦 Create ATM Account
+    </h1>
+
+    <p class="text-center text-muted mb-2">
+        Register your account to access
+        secure ATM services.
+    </p>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('register') }}"
+        id="registerForm"
+    >
+
+        <div class="form-group">
+
+            <label for="name">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="100"
+                required
+                autofocus
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                maxlength="150"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="card">
+                Card Number
+            </label>
+
+            <input
+                type="text"
+                id="card"
+                name="card"
+                placeholder="Enter card number"
+                autocomplete="off"
+                inputmode="numeric"
+                pattern="[0-9]+"
+                maxlength="19"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="pin">
+                Create PIN
+            </label>
+
+            <input
+                type="password"
+                id="pin"
+                name="pin"
+                placeholder="Enter 4 to 6 digit PIN"
+                autocomplete="new-password"
+                inputmode="numeric"
+                pattern="[0-9]{4,6}"
+                minlength="4"
+                maxlength="6"
+                required
+            >
+
+        </div>
+
+
+        <div class="alert alert-warning">
+            ⚠️ PIN must contain only
+            4 to 6 numeric digits.
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="security_question">
+                Security Question
+            </label>
+
+            <select
+                id="security_question"
+                name="security_question"
+                required
+            >
+
+                <option value="">
+                    Select security question
+                </option>
+
+                <option value="What is your favorite color?">
+                    What is your favorite color?
+                </option>
+
+                <option value="What is your favorite food?">
+                    What is your favorite food?
+                </option>
+
+                <option value="What is your first school name?">
+                    What is your first school name?
+                </option>
+
+                <option value="What is your favorite city?">
+                    What is your favorite city?
+                </option>
+
+                <option value="What is your childhood nickname?">
+                    What is your childhood nickname?
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="security_answer">
+                Security Answer
+            </label>
+
+            <input
+                type="password"
+                id="security_answer"
+                name="security_answer"
+                placeholder="Enter your security answer"
+                autocomplete="off"
+                maxlength="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="alert alert-info">
+            🔐 Remember your card number,
+            PIN and security answer. They are
+            required for account access and
+            PIN recovery.
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-success btn-block"
         >
+            🏦 Create Account
+        </button>
 
-        <label for="email">Email Address</label>
-        <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter Email Address"
-            required
-        >
-
-        <label for="card">ATM Card Number</label>
-        <input
-            type="text"
-            id="card"
-            name="card"
-            placeholder="Enter 12 Digit ATM Card Number"
-            maxlength="12"
-            required
-        >
-
-        <label for="pin">PIN</label>
-        <input
-            type="password"
-            id="pin"
-            name="pin"
-            placeholder="Enter PIN"
-            required
-        >
-
-        <label for="security_question">Security Question</label>
-        <select id="security_question" name="security_question" required>
-            <option value="">Select Security Question</option>
-            <option value="What is your pet name?">What is your pet name?</option>
-            <option value="What is your favorite color?">What is your favorite color?</option>
-            <option value="What is your birth place?">What is your birth place?</option>
-            <option value="What is your best friend's name?">What is your best friend's name?</option>
-        </select>
-
-        <label for="security_answer">Security Answer</label>
-        <input
-            type="text"
-            id="security_answer"
-            name="security_answer"
-            placeholder="Enter Security Answer"
-            required
-        >
-
-        <button type="submit">Register</button>
     </form>
 
-    <p>
+
+    <div class="auth-link">
+
         Already have an account?
-        <a href="/">Login Here</a>
-    </p>
+
+        <a href="{{ url_for('login') }}">
+            Login Now
+        </a>
+
+    </div>
+
 </div>
 
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
 </body>
+
 </html>

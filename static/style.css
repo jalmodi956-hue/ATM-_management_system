@@ -1,528 +1,1223 @@
-/* =========================
-   GLOBAL
-========================= */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+/* =========================================
+   ATM MANAGEMENT SYSTEM - FINAL STYLE.CSS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background:#f2f2f2;
-    color:#222;
-    min-height:100vh;
-    padding:20px;
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #0f172a;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --info: #0891b2;
+    --purple: #9333ea;
+    --white: #ffffff;
+    --light: #f1f5f9;
+    --gray: #64748b;
+    --dark: #0f172a;
+    --border: #dbeafe;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    --shadow-hover: 0 18px 40px rgba(15, 23, 42, 0.18);
 }
 
-a{
-    text-decoration:none;
-    color:#0066cc;
+html {
+    scroll-behavior: smooth;
 }
 
-a:hover{
-    text-decoration:underline;
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #e0f2fe,
+        #eff6ff,
+        #f8fafc
+    );
+    color: var(--dark);
+    line-height: 1.5;
 }
 
-h1,h2,h3,h4{
-    margin-bottom:15px;
-    color:#1f2d3d;
+img {
+    max-width: 100%;
 }
 
-p{
-    margin:10px 0;
-    color:#444;
+a {
+    color: var(--primary);
 }
 
-/* =========================
-   COMMON BOX / CARD
-========================= */
-.login-box,
-.box,
-.container,
-.admin-box,
-.profile-box{
-    width:100%;
-    max-width:500px;
-    background:#fff;
-    margin:30px auto;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 0 15px rgba(0,0,0,0.12);
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+    width: 100%;
+    padding: 16px 6%;
+    background: rgba(15, 23, 42, 0.97);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 100;
 }
 
-.container-wide{
-    width:100%;
-    max-width:1000px;
-    background:#fff;
-    margin:30px auto;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 0 15px rgba(0,0,0,0.12);
+.navbar h1,
+.navbar .logo {
+    font-size: 24px;
+    font-weight: 700;
 }
 
-/* =========================
-   FORM ELEMENTS
-========================= */
-form{
-    width:100%;
+.navbar a {
+    color: var(--white);
+    text-decoration: none;
+    margin-left: 15px;
+    transition: 0.3s;
 }
 
-label{
-    display:block;
-    margin:10px 0 6px;
-    font-weight:bold;
-    color:#333;
+.navbar a:hover {
+    color: #60a5fa;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.page-title {
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 30px;
+    color: var(--secondary);
+}
+
+
+/* =========================================
+   LOGIN / REGISTER / FORMS
+========================================= */
+
+.login-container,
+.register-container,
+.form-container,
+.auth-container {
+    width: 92%;
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.login-container h1,
+.login-container h2,
+.register-container h1,
+.register-container h2,
+.form-container h1,
+.form-container h2,
+.auth-container h1,
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--secondary);
+}
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: #334155;
 }
 
 input,
 select,
-textarea{
-    width:100%;
-    padding:12px;
-    margin-bottom:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:15px;
-    outline:none;
-    transition:0.3s;
-    background:#fff;
+textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    background: var(--white);
+    transition: 0.3s;
 }
 
 input:focus,
 select:focus,
-textarea:focus{
-    border-color:#0066cc;
-    box-shadow:0 0 0 3px rgba(0,102,204,0.12);
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-/* =========================
+input:disabled,
+button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+
+/* =========================================
+   PIN INPUT / SHOW HIDE BUTTON
+========================================= */
+
+.pin-input-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.pin-input-wrapper input {
+    padding-right: 75px;
+}
+
+.pin-toggle {
+    position: absolute !important;
+    right: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: auto !important;
+    min-width: 55px;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    border-radius: 7px;
+    background: var(--secondary);
+}
+
+.pin-toggle:hover {
+    transform: translateY(-50%) !important;
+    background: #1e293b;
+}
+
+
+/* =========================================
    BUTTONS
-========================= */
+========================================= */
+
 button,
-.btn{
-    display:inline-block;
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border:none;
-    border-radius:8px;
-    background:#0066cc;
-    color:#fff;
-    font-size:15px;
-    cursor:pointer;
-    text-align:center;
-    transition:0.3s;
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
 }
 
-button:hover,
-.btn:hover{
-    background:#004c99;
-    text-decoration:none;
+button:hover:not(:disabled),
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
 }
 
-.btn-green{
-    background:#28a745;
-}
-.btn-green:hover{
-    background:#1f7f34;
+.btn-success {
+    background: var(--success);
 }
 
-.btn-red{
-    background:#dc3545;
-}
-.btn-red:hover{
-    background:#b02a37;
+.btn-success:hover {
+    background: #15803d;
 }
 
-.btn-orange{
-    background:#fd7e14;
-}
-.btn-orange:hover{
-    background:#d96508;
+.btn-danger {
+    background: var(--danger);
 }
 
-.btn-dark{
-    background:#333;
-}
-.btn-dark:hover{
-    background:#111;
+.btn-danger:hover {
+    background: #b91c1c;
 }
 
-.btn-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-top:10px;
+.btn-warning {
+    background: var(--warning);
+    color: var(--dark);
 }
 
-/* =========================
+.btn-warning:hover {
+    background: #d97706;
+}
+
+.btn-info {
+    background: var(--info);
+}
+
+.btn-info:hover {
+    background: #0e7490;
+}
+
+.btn-dark {
+    background: var(--secondary);
+}
+
+.btn-purple {
+    background: var(--purple);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+
+/* =========================================
+   AUTH LINKS
+========================================= */
+
+.auth-link {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.auth-link a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
    DASHBOARD
-========================= */
-.dashboard-box{
-    width:100%;
-    max-width:650px;
-    background:#fff;
-    margin:30px auto;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 0 15px rgba(0,0,0,0.12);
-    text-align:center;
+========================================= */
+
+.dashboard-header {
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 18px;
+    background: linear-gradient(
+        135deg,
+        #1d4ed8,
+        #2563eb
+    );
+    color: var(--white);
+    box-shadow: var(--shadow);
 }
 
-.balance{
-    font-size:28px;
-    color:green;
-    font-weight:bold;
-    margin:20px 0;
+.dashboard-header h1 {
+    margin-bottom: 8px;
 }
 
-.last-login{
-    margin-top:15px;
-    font-size:14px;
-    color:#666;
-    line-height:1.6;
+.dashboard-grid,
+.card-grid,
+.admin-grid,
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
+    gap: 20px;
 }
 
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-top:20px;
+.dashboard-card,
+.card,
+.admin-card,
+.stat-card {
+    padding: 25px;
+    border-radius: 18px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border: 1px solid #e2e8f0;
+    transition: 0.3s;
 }
 
-/* =========================
-   ATM CARD
-========================= */
-.atm-card{
-    width:100%;
-    max-width:420px;
-    margin:20px auto;
-    padding:25px;
-    border-radius:16px;
-    background:linear-gradient(135deg, #1e3c72, #2a5298);
-    color:white;
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
-    text-align:left;
+.dashboard-card:hover,
+.card:hover,
+.admin-card:hover,
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: #93c5fd;
+    box-shadow: var(--shadow-hover);
 }
 
-.atm-card h3{
-    color:white;
-    margin-bottom:15px;
+.dashboard-card h3,
+.card h3,
+.admin-card h3,
+.stat-card h3 {
+    margin-bottom: 12px;
+    color: var(--secondary);
 }
 
-.atm-card-number{
-    font-size:20px;
-    letter-spacing:2px;
-    margin:15px 0;
-    font-weight:bold;
+.dashboard-card p,
+.card p {
+    color: var(--gray);
+    line-height: 1.6;
 }
 
-.atm-card-name,
-.atm-card-balance{
-    font-size:15px;
-    margin:8px 0;
+.dashboard-card a {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    font-weight: 600;
 }
 
-.atm-bank{
-    text-align:right;
-    font-size:14px;
-    margin-top:18px;
-    opacity:0.9;
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
 }
 
-/* =========================
-   TABLES
-========================= */
-.table-wrapper{
-    overflow-x:auto;
-    margin-top:20px;
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--primary);
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#fff;
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
-table th,
-table td{
-    border:1px solid #ddd;
-    padding:12px;
-    text-align:center;
-    font-size:14px;
+.stat-label {
+    color: var(--gray);
+    margin-top: 5px;
 }
 
-table th{
-    background:#0066cc;
-    color:white;
+
+/* =========================================
+   BALANCE
+========================================= */
+
+.balance-card {
+    max-width: 550px;
+    margin: 50px auto;
+    padding: 40px;
+    text-align: center;
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+    color: var(--white);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
 }
 
-table tr:nth-child(even){
-    background:#f9f9f9;
+.balance-card h2 {
+    margin-bottom: 15px;
 }
 
-table tr:hover{
-    background:#eef5ff;
+.balance-card .amount,
+.balance-amount {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 20px 0;
 }
 
-/* =========================
+
+/* =========================================
+   FAST CASH
+========================================= */
+
+.fast-cash-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(130px, 1fr)
+    );
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.fast-cash-btn {
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+}
+
+
+/* =========================================
+   DAILY WITHDRAWAL LIMIT
+========================================= */
+
+.limit-box {
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 12px;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #9a3412;
+}
+
+.limit-progress {
+    width: 100%;
+    height: 12px;
+    margin-top: 10px;
+    background: #fed7aa;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.limit-progress-bar {
+    height: 100%;
+    background: var(--warning);
+    border-radius: 20px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+th {
+    background: var(--secondary);
+    color: var(--white);
+    font-weight: 600;
+}
+
+tbody tr {
+    transition: 0.2s;
+}
+
+tbody tr:hover {
+    background: #eff6ff;
+}
+
+td .btn {
+    padding: 8px 12px;
+    margin: 3px;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TABLE SEARCH
+========================================= */
+
+#tableSearch {
+    max-width: 450px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   TRANSACTION BADGES
+========================================= */
+
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background: #cffafe;
+    color: #155e75;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-purple {
+    background: #f3e8ff;
+    color: #7e22ce;
+}
+
+
+/* =========================================
+   TRANSACTION REFERENCE
+========================================= */
+
+.reference-id {
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    color: var(--primary);
+    background: #eff6ff;
+    padding: 5px 8px;
+    border-radius: 6px;
+}
+
+
+/* =========================================
+   RECEIPT
+========================================= */
+
+.receipt {
+    max-width: 550px;
+    margin: 45px auto;
+    padding: 35px;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border-top: 6px solid var(--primary);
+}
+
+.receipt h1,
+.receipt h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.receipt-row span:first-child {
+    font-weight: 600;
+    color: var(--gray);
+}
+
+.receipt-row span:last-child {
+    font-weight: 600;
+}
+
+
+/* =========================================
    PROFILE
-========================= */
-.profile-box img{
-    width:120px;
-    height:120px;
-    object-fit:cover;
-    border-radius:50%;
-    border:3px solid #0066cc;
-    margin-bottom:15px;
+========================================= */
+
+.profile-card {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 35px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
-.profile-details p{
-    margin:8px 0;
-    font-size:15px;
+.profile-image,
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #dbeafe;
+    margin-bottom: 18px;
 }
 
-/* =========================
-   ALERT / MESSAGE BOX
-========================= */
-.message{
-    padding:12px;
-    border-radius:8px;
-    margin-bottom:15px;
-    font-size:14px;
+.profile-card h2 {
+    margin-bottom: 8px;
 }
 
-.success{
-    background:#d4edda;
-    color:#155724;
-    border:1px solid #c3e6cb;
+.profile-card p {
+    color: var(--gray);
+    margin: 8px 0;
 }
 
-.error{
-    background:#f8d7da;
-    color:#721c24;
-    border:1px solid #f5c6cb;
+
+/* =========================================
+   ACCOUNT DETAILS
+========================================= */
+
+.account-details {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
 }
 
-.warning{
-    background:#fff3cd;
-    color:#856404;
-    border:1px solid #ffeeba;
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-/* =========================
-   ADMIN DASHBOARD
-========================= */
-.admin-stats{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:15px;
-    margin-top:20px;
+.detail-label {
+    font-weight: 600;
+    color: var(--gray);
 }
 
-.stat-card{
-    background:#f8f9fa;
-    border-left:5px solid #0066cc;
-    border-radius:10px;
-    padding:18px;
-    text-align:left;
-    box-shadow:0 0 10px rgba(0,0,0,0.05);
+.detail-value {
+    font-weight: 600;
+    text-align: right;
 }
 
-.stat-card h4{
-    margin-bottom:8px;
-    color:#333;
+
+/* =========================================
+   FIXED DEPOSIT
+========================================= */
+
+.fd-card {
+    padding: 25px;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--purple);
 }
 
-.stat-card p{
-    font-size:20px;
-    font-weight:bold;
-    color:#0066cc;
+.fd-card h3 {
+    color: var(--purple);
+    margin-bottom: 15px;
 }
 
-/* =========================
-   SEARCH / FILTER
-========================= */
-.search-box{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
+.fd-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(250px, 1fr)
+    );
+    gap: 20px;
 }
 
-.search-box input{
-    flex:1;
-    min-width:200px;
-    margin-bottom:0;
+.maturity-amount {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--success);
 }
 
-.search-box button{
-    width:auto;
-    min-width:140px;
+
+/* =========================================
+   RESULT BOX
+========================================= */
+
+.result-box {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    background: #ecfdf5;
+    border: 1px solid #86efac;
+    color: #166534;
+    text-align: center;
 }
 
-/* =========================
-   LINKS / BACK BUTTON
-========================= */
-.back{
-    display:inline-block;
-    margin-top:15px;
-    padding:10px 20px;
-    background:#0066cc;
-    color:white;
-    border-radius:8px;
+.result-box h2 {
+    margin-bottom: 10px;
 }
 
-.back:hover{
-    background:#004c99;
-    text-decoration:none;
+
+/* =========================================
+   ADMIN PANEL
+========================================= */
+
+.admin-header {
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1e293b
+    );
+    color: var(--white);
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
 }
 
-/* =========================
-   DARK MODE
-========================= */
-.dark-mode{
-    background:#121212;
-    color:#fff;
+.admin-card {
+    border-left: 5px solid var(--primary);
 }
 
-.dark-mode .login-box,
-.dark-mode .box,
-.dark-mode .container,
-.dark-mode .dashboard-box,
-.dark-mode .admin-box,
-.dark-mode .profile-box,
-.dark-mode .container-wide{
-    background:#1e1e1e;
-    color:#fff;
+.locked-user {
+    background: #fff1f2;
 }
 
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4,
-.dark-mode p,
-.dark-mode label{
-    color:#fff;
+.user-locked {
+    color: var(--danger);
+    font-weight: 700;
 }
 
-.dark-mode input,
-.dark-mode select,
-.dark-mode textarea{
-    background:#2b2b2b;
-    color:#fff;
-    border:1px solid #555;
+.user-active {
+    color: var(--success);
+    font-weight: 700;
 }
 
-.dark-mode .balance{
-    color:#00ff99;
+
+/* =========================================
+   CHART.JS CHARTS
+========================================= */
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(300px, 1fr)
+    );
+    gap: 25px;
+    margin-top: 30px;
 }
 
-.dark-mode .btn{
-    background:#333;
-    color:#fff;
+.chart-container,
+.chart-card {
+    width: 100%;
+    min-height: 400px;
+    padding: 25px;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    text-align: center;
 }
 
-.dark-mode .btn:hover{
-    background:#555;
+.chart-container h2,
+.chart-card h2,
+.chart-container h3,
+.chart-card h3 {
+    margin-bottom: 20px;
+    color: var(--secondary);
 }
 
-.dark-mode table{
-    background:#1e1e1e;
-    color:#fff;
+.chart-container canvas,
+.chart-card canvas {
+    width: 100% !important;
+    height: 330px !important;
 }
 
-.dark-mode table td{
-    border-color:#444;
+.chart-container img,
+.chart-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
-.dark-mode table tr:nth-child(even){
-    background:#252525;
+
+/* =========================================
+   ALERTS / MESSAGES
+========================================= */
+
+.alert,
+.message {
+    padding: 14px 18px;
+    margin: 15px 0;
+    border-radius: 10px;
+    font-weight: 500;
 }
 
-.dark-mode .stat-card{
-    background:#2a2a2a;
+.alert-success,
+.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
 }
 
-.dark-mode .stat-card p{
-    color:#66b3ff;
+.alert-danger,
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media screen and (max-width: 768px){
-    body{
-        padding:10px;
+.alert-warning,
+.warning {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.alert-info,
+.info {
+    background: #cffafe;
+    color: #155e75;
+    border: 1px solid #67e8f9;
+}
+
+.js-global-message {
+    animation: slideMessage 0.35s ease;
+}
+
+@keyframes slideMessage {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
     }
 
-    .login-box,
-    .box,
-    .container,
-    .dashboard-box,
-    .admin-box,
-    .profile-box,
-    .container-wide{
-        width:100%;
-        padding:20px;
-        margin:20px auto;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================
+   EMPTY DATA
+========================================= */
+
+.empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--gray);
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+.empty-state h3 {
+    color: var(--secondary);
+    margin-bottom: 10px;
+}
+
+
+/* =========================================
+   PROCESSING BUTTON
+========================================= */
+
+button:disabled,
+input[type="submit"]:disabled {
+    background: var(--gray);
+    transform: none;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer,
+.footer {
+    margin-top: 50px;
+    padding: 22px;
+    text-align: center;
+    background: var(--secondary);
+    color: #cbd5e1;
+}
+
+
+/* =========================================
+   UTILITIES
+========================================= */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.text-muted {
+    color: var(--gray);
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mt-1 {
+    margin-top: 10px;
+}
+
+.mt-2 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 30px;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
+
+.mb-2 {
+    margin-bottom: 20px;
+}
+
+.mb-3 {
+    margin-bottom: 30px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: column;
+        text-align: center;
     }
 
-    h2{
-        font-size:22px;
+    .navbar a {
+        display: inline-block;
+        margin: 6px;
     }
 
-    h3{
-        font-size:18px;
+    .container {
+        width: 94%;
+        margin: 25px auto;
     }
 
-    .balance{
-        font-size:22px;
-    }
-
-    .btn,
-    button{
-        font-size:14px;
-        padding:10px;
-    }
-
-    input,
-    select,
-    textarea{
-        font-size:14px;
-        padding:10px;
+    .login-container,
+    .register-container,
+    .form-container,
+    .auth-container {
+        margin: 30px auto;
+        padding: 25px 20px;
     }
 
     .dashboard-grid,
-    .admin-stats,
-    .btn-row{
-        grid-template-columns:1fr;
+    .card-grid,
+    .admin-grid,
+    .stats-grid,
+    .fd-grid,
+    .chart-grid {
+        grid-template-columns: 1fr;
     }
 
-    .atm-card-number{
-        font-size:16px;
-        letter-spacing:1px;
+    .button-group {
+        flex-direction: column;
     }
 
-    .atm-card-name,
-    .atm-card-balance,
-    .atm-bank{
-        font-size:14px;
+    .button-group .btn,
+    .button-group button {
+        width: 100%;
     }
 
-    table th,
-    table td{
-        font-size:13px;
-        padding:10px;
+    .page-title {
+        font-size: 25px;
     }
 
-    .search-box{
-        flex-direction:column;
+    .balance-card .amount,
+    .balance-amount {
+        font-size: 32px;
     }
 
-    .search-box button{
-        width:100%;
+    th,
+    td {
+        padding: 11px;
+        font-size: 14px;
+    }
+
+    .receipt-row,
+    .detail-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .detail-value {
+        text-align: left;
+    }
+
+    .chart-container,
+    .chart-card {
+        min-height: 350px;
+        padding: 18px;
+    }
+
+    .chart-container canvas,
+    .chart-card canvas {
+        height: 280px !important;
     }
 }
 
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .login-container,
+    .register-container,
+    .form-container,
+    .auth-container,
+    .profile-card,
+    .receipt,
+    .account-details {
+        width: 94%;
+        padding: 22px 16px;
+    }
+
+    .dashboard-header,
+    .admin-header {
+        padding: 20px;
+    }
+
+    .dashboard-header h1,
+    .admin-header h1 {
+        font-size: 24px;
+    }
+
+    button,
+    .btn {
+        width: 100%;
+    }
+
+    .pin-toggle {
+        width: auto !important;
+    }
+
+    .fast-cash-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-number {
+        font-size: 27px;
+    }
+
+    .profile-image,
+    .profile-pic {
+        width: 110px;
+        height: 110px;
+    }
+
+    .chart-container canvas,
+    .chart-card canvas {
+        height: 250px !important;
+    }
+}
+
+
+/* =========================================
+   PRINT RECEIPT
+========================================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .navbar,
+    .footer,
+    footer,
+    .button-group,
+    button,
+    .btn {
+        display: none !important;
+    }
+
+    .receipt {
+        box-shadow: none;
+        border: 1px solid #000;
+        margin: 0 auto;
+    }
+}

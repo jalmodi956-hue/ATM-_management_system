@@ -1,54 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Transaction</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Search Transactions | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Search Transaction</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="keyword">Transaction Type</label>
-        <input
-            type="text"
-            id="keyword"
-            name="keyword"
-            placeholder="Example: Deposit / Withdraw / Money Transfer"
-            required
-        >
-        <button type="submit">Search</button>
-    </form>
-
-    {% if data %}
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Date</th>
-            </tr>
-
-            {% for row in data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>₹ {{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="logo">
+        🏧 ATM System
     </div>
 
+    <div>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('balance') }}">Balance</a>
+        <a href="{{ url_for('mini_statement') }}">Mini Statement</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        🔍 Search Transactions
+    </h1>
+
+
+    <div class="form-container">
+
+        <form
+            method="POST"
+            action="{{ url_for('search') }}"
+            id="transactionSearchForm"
+        >
+
+            <div class="form-group">
+
+                <label for="keyword">
+                    Transaction Type or Reference ID
+                </label>
+
+                <input
+                    type="search"
+                    id="keyword"
+                    name="keyword"
+                    placeholder="Deposit, Withdraw, Transfer or ATM-..."
+                    autocomplete="off"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-block"
+            >
+                🔍 Search Transaction
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if data %}
+
+    <div class="table-container">
+
+        <input
+            type="search"
+            id="tableSearch"
+            placeholder="Filter search results..."
+            autocomplete="off"
+            class="mb-2"
+        >
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>No.</th>
+                    <th>Reference ID</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in data %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        <span class="reference-id">
+                            {{ row[0] or "-" }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{ row[1] }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(row[2]) }}
+                    </td>
+
+                    <td>
+                        {{ row[3] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
     {% elif request.method == "POST" %}
-    <p>No matching transactions found.</p>
+
+    <div class="empty-state">
+
+        <h3>
+            🔍 No Transactions Found
+        </h3>
+
+        <p>
+            No matching transaction type or
+            reference ID was found.
+        </p>
+
+    </div>
+
     {% endif %}
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('history') }}"
+            class="btn btn-info"
+        >
+            📜 Transaction History
+        </a>
+
+        <a
+            href="{{ url_for('filter_transactions') }}"
+            class="btn btn-warning"
+        >
+            📅 Filter by Date
+        </a>
+
+        <a
+            href="{{ url_for('mini_statement') }}"
+            class="btn btn-success"
+        >
+            📄 Mini Statement
+        </a>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
-</html>
 
+</html>

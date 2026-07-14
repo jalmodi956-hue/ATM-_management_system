@@ -1,30 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Admin Dashboard | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Admin Dashboard</h2>
+<nav class="navbar">
 
-    <div class="admin-stats">
-        <h3>Total Users: {{ total_users }}</h3>
-        <h3>Total Balance: ₹ {{ total_balance }}</h3>
-        <h3>Total Deposits: ₹ {{ total_deposits }}</h3>
-        <h3>Total Withdrawals: ₹ {{ total_withdrawals }}</h3>
-        <h3>Total Transfers: ₹ {{ total_transfers }}</h3>
+    <div class="logo">
+        🏧 ATM Admin
     </div>
 
-    <a href="/all_users" class="btn">View All Users</a>
-    <a href="/add_user" class="btn">Add User</a>
-    <a href="/search_user" class="btn">Search User</a>
-    <a href="/admin_chart" class="btn">View Charts</a>
-    <a href="/logout" class="btn logout">Logout</a>
-</div>
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('all_users') }}">
+            All Users
+        </a>
+
+        <a href="{{ url_for('add_user') }}">
+            Add User
+        </a>
+
+        <a href="{{ url_for('search_user') }}">
+            Search User
+        </a>
+
+        <a href="{{ url_for('admin_logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <section class="dashboard-header">
+
+        <h1>
+            🛡️ Admin Dashboard
+        </h1>
+
+        <p>
+            Welcome to ATM Management
+            Administration Panel.
+        </p>
+
+        <p>
+            Manage ATM users, accounts
+            and system information.
+        </p>
+
+    </section>
+
+
+    <h2 class="page-title">
+        📊 System Overview
+    </h2>
+
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+
+            <h3>
+                👥 Total Users
+            </h3>
+
+            <div class="stat-number">
+                {{ total_users or 0 }}
+            </div>
+
+            <p>
+                Total registered ATM users.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                🔒 Locked Accounts
+            </h3>
+
+            <div class="stat-number">
+                {{ locked_users or 0 }}
+            </div>
+
+            <p>
+                ATM accounts currently locked.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                💳 Total Transactions
+            </h3>
+
+            <div class="stat-number">
+                {{ total_transactions or 0 }}
+            </div>
+
+            <p>
+                Total ATM transactions recorded.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                💰 Total Bank Balance
+            </h3>
+
+            <div class="stat-number">
+                ₹{{ "%.2f"|format(total_balance or 0) }}
+            </div>
+
+            <p>
+                Combined balance of ATM users.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <h2 class="page-title">
+        ⚙️ Admin Services
+    </h2>
+
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+
+            <h3>
+                👥 All ATM Users
+            </h3>
+
+            <p>
+                View and manage all registered
+                ATM user accounts.
+            </p>
+
+            <a href="{{ url_for('all_users') }}">
+                View Users →
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                ➕ Add New User
+            </h3>
+
+            <p>
+                Create a new ATM account
+                from the admin panel.
+            </p>
+
+            <a href="{{ url_for('add_user') }}">
+                Add User →
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                🔍 Search User
+            </h3>
+
+            <p>
+                Search ATM users by card,
+                name or email address.
+            </p>
+
+            <a href="{{ url_for('search_user') }}">
+                Search User →
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                🔐 Account Management
+            </h3>
+
+            <p>
+                Edit, unlock or delete
+                ATM user accounts.
+            </p>
+
+            <a href="{{ url_for('all_users') }}">
+                Manage Accounts →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <div class="alert alert-warning text-center">
+        ⚠️ Administrator actions can modify
+        ATM user accounts and account balances.
+    </div>
+
+
+    <div class="alert alert-info text-center">
+        🔐 Always logout after completing
+        administrator tasks.
+    </div>
+
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('all_users') }}"
+            class="btn btn-info"
+        >
+            👥 All Users
+        </a>
+
+
+        <a
+            href="{{ url_for('add_user') }}"
+            class="btn btn-success"
+        >
+            ➕ Add User
+        </a>
+
+
+        <a
+            href="{{ url_for('search_user') }}"
+            class="btn btn-warning"
+        >
+            🔍 Search User
+        </a>
+
+
+        <a
+            href="{{ url_for('admin_logout') }}"
+            class="btn btn-danger"
+        >
+            🚪 Admin Logout
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+    🏧 ATM Management System — Admin Panel
+</footer>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

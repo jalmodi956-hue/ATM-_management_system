@@ -1,40 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Transaction History | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="container-wide">
-    <h2>Transaction History</h2>
+<nav class="navbar">
+
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('mini_statement') }}">
+            Mini Statement
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        📜 Transaction History
+    </h1>
+
+
+    <div class="alert alert-info text-center">
+        ℹ️ View and manage your complete
+        ATM transaction history.
+    </div>
+
 
     {% if data %}
-    <div class="table-wrapper">
-        <table>
-            <tr>
-                <th>Transaction Type</th>
-                <th>Amount (₹)</th>
-                <th>Date & Time</th>
-            </tr>
 
-            {% for row in data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>₹ {{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-            </tr>
-            {% endfor %}
+    <div class="table-container">
+
+        <input
+            type="search"
+            id="tableSearch"
+            placeholder="Search transactions..."
+            autocomplete="off"
+            class="mb-2"
+        >
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>No.</th>
+                    <th>Reference ID</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Date & Time</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in data %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="reference-id">
+                            {{ row[0] or "-" }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if row[1] == "Deposit" %}
+
+                        <span class="badge badge-success">
+                            💰 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] in [
+                            "Withdraw",
+                            "Fast Cash Withdraw"
+                        ] %}
+
+                        <span class="badge badge-danger">
+                            💸 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] in [
+                            "Money Transfer Sent",
+                            "Money Transfer Received"
+                        ] %}
+
+                        <span class="badge badge-info">
+                            💳 {{ row[1] }}
+                        </span>
+
+
+                        {% elif row[1] == "Fixed Deposit" %}
+
+                        <span class="badge badge-purple">
+                            📈 {{ row[1] }}
+                        </span>
+
+
+                        {% else %}
+
+                        <span class="badge badge-warning">
+                            {{ row[1] }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="font-bold">
+
+                        ₹{{ "%.2f"|format(row[2]) }}
+
+                    </td>
+
+
+                    <td>
+                        {{ row[3] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
         </table>
+
     </div>
+
+
     {% else %}
-        <p>No transaction history found.</p>
+
+    <div class="empty-state">
+
+        <h3>
+            📭 No Transactions Found
+        </h3>
+
+        <p>
+            Your transaction history is empty.
+            Complete a deposit, withdrawal or
+            transfer to create a transaction.
+        </p>
+
+    </div>
+
     {% endif %}
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+
+    <div class="button-group">
+
+        <a
+            href="{{ url_for('search') }}"
+            class="btn"
+        >
+            🔍 Search Transactions
+        </a>
+
+
+        <a
+            href="{{ url_for('filter_transactions') }}"
+            class="btn btn-warning"
+        >
+            📅 Filter by Date
+        </a>
+
+
+        <a
+            href="{{ url_for('mini_statement') }}"
+            class="btn btn-success"
+        >
+            📄 Mini Statement
+        </a>
+
+
+        {% if data %}
+
+        <a
+            href="{{ url_for('receipt') }}"
+            class="btn btn-info"
+        >
+            🧾 Latest Receipt
+        </a>
+
+
+        <a
+            href="{{ url_for('download_pdf') }}"
+            class="btn btn-warning"
+        >
+            📄 Download PDF
+        </a>
+
+
+        <a
+            href="{{ url_for('export_csv') }}"
+            class="btn btn-success"
+        >
+            📊 Export CSV
+        </a>
+
+        {% endif %}
+
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-dark"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

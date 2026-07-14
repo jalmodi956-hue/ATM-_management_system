@@ -1,37 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Details</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Account Details | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Account Details</h2>
+<nav class="navbar">
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <td>{{ user[0] }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ user[1] }}</td>
-        </tr>
-        <tr>
-            <th>Card Number</th>
-            <td>{{ user[2] }}</td>
-        </tr>
-        <tr>
-            <th>Balance</th>
-            <td>₹ {{ user[3] }}</td>
-        </tr>
-    </table>
+    <div class="logo">
+        🏧 ATM System
+    </div>
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Profile
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        🏧 Account Details
+    </h1>
+
+
+    {% if user %}
+
+    <section class="profile-card">
+
+        <div class="result-box">
+
+            <h2>
+                🏦 Account Information
+            </h2>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    👤 Account Holder
+                </span>
+
+                <span class="font-bold">
+                    {{ user[0] or "-" }}
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    📧 Email Address
+                </span>
+
+                <span>
+                    {{ user[1] or "-" }}
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    💳 Card Number
+                </span>
+
+                <span class="reference-id">
+
+                    {% if user[2] %}
+
+                    **** **** {{ user[2][-4:] }}
+
+                    {% else %}
+
+                    -
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    💰 Available Balance
+                </span>
+
+                <span class="text-success font-bold">
+                    ₹{{ "%.2f"|format(user[3] or 0) }}
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    🟢 Account Status
+                </span>
+
+                <span class="badge badge-success">
+                    ✅ Active
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="alert alert-info">
+            🔐 Your ATM card number is masked
+            to protect your account information.
+        </div>
+
+
+        <div class="alert alert-warning">
+            ⚠️ Never share your ATM PIN or
+            security answer with anyone.
+        </div>
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('edit_profile') }}"
+                class="btn btn-warning"
+            >
+                ✏️ Edit Profile
+            </a>
+
+
+            <a
+                href="{{ url_for('change_pin') }}"
+                class="btn btn-info"
+            >
+                🔐 Change PIN
+            </a>
+
+
+            <a
+                href="{{ url_for('balance') }}"
+                class="btn btn-success"
+            >
+                💰 Check Balance
+            </a>
+
+
+            <a
+                href="{{ url_for('mini_statement') }}"
+                class="btn btn-warning"
+            >
+                📄 Mini Statement
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="btn"
+            >
+                📜 Transaction History
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </section>
+
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <h3>
+            🏧 Account Details Not Found
+        </h3>
+
+        <p>
+            Your ATM account information
+            could not be found.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

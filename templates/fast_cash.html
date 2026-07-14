@@ -1,26 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Cash</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Fast Cash | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Fast Cash</h2>
-    <p>Select a quick withdrawal amount:</p>
+<nav class="navbar">
 
-    <form method="POST">
-        <button type="submit" name="amount" value="500">₹500</button>
-        <button type="submit" name="amount" value="1000">₹1000</button>
-        <button type="submit" name="amount" value="2000">₹2000</button>
-        <button type="submit" name="amount" value="5000">₹5000</button>
-    </form>
+    <div class="logo">
+        🏧 ATM System
+    </div>
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('withdraw') }}">
+            Withdraw
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        ⚡ Fast Cash
+    </h1>
+
+
+    <div class="form-container">
+
+        <p class="text-center text-muted mb-2">
+            Select a quick withdrawal amount.
+        </p>
+
+
+        <div class="alert alert-info">
+            ⚡ Fast Cash allows you to quickly
+            withdraw a predefined amount.
+        </div>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('fast_cash') }}"
+            id="fastCashForm"
+        >
+
+            <div class="fast-cash-grid">
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="500"
+                    class="fast-cash-btn"
+                >
+                    ₹500
+                </button>
+
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="1000"
+                    class="fast-cash-btn"
+                >
+                    ₹1,000
+                </button>
+
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="2000"
+                    class="fast-cash-btn"
+                >
+                    ₹2,000
+                </button>
+
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="5000"
+                    class="fast-cash-btn"
+                >
+                    ₹5,000
+                </button>
+
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="10000"
+                    class="fast-cash-btn"
+                >
+                    ₹10,000
+                </button>
+
+
+                <button
+                    type="submit"
+                    name="amount"
+                    value="20000"
+                    class="fast-cash-btn"
+                >
+                    ₹20,000
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div class="alert alert-warning mt-2">
+            ⚠️ Selected amount will be deducted
+            from your available account balance.
+        </div>
+
+
+        <div class="alert alert-info">
+            ℹ️ Your balance and daily withdrawal
+            limit will be verified automatically.
+        </div>
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('withdraw') }}"
+                class="btn"
+            >
+                💸 Custom Withdrawal
+            </a>
+
+
+            <a
+                href="{{ url_for('balance') }}"
+                class="btn btn-success"
+            >
+                💰 Check Balance
+            </a>
+
+
+            <a
+                href="{{ url_for('mini_statement') }}"
+                class="btn btn-warning"
+            >
+                📄 Mini Statement
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="btn btn-info"
+            >
+                📜 Transaction History
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

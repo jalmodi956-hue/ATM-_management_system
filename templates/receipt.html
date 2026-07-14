@@ -1,26 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATM Receipt</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Transaction Receipt | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>ATM Transaction Receipt</h2>
+<nav class="navbar">
 
-    <p><strong>Card Number:</strong> {{ card }}</p>
-    <p><strong>Transaction Type:</strong> {{ transaction[0] }}</p>
-    <p><strong>Amount:</strong> ₹ {{ transaction[1] }}</p>
-    <p><strong>Date:</strong> {{ transaction[2] }}</p>
-
-    <div class="btn-row">
-        <button class="btn" onclick="window.print()">Print Receipt</button>
-        <a href="/dashboard" class="btn">Back to Dashboard</a>
+    <div class="logo">
+        🏧 ATM System
     </div>
-</div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('mini_statement') }}">
+            Mini Statement
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <div
+        class="receipt"
+        id="transactionReceipt"
+    >
+
+        <h1>🏧 ATM System</h1>
+
+        <h2>
+            Transaction Receipt
+        </h2>
+
+
+        <div class="alert alert-success text-center">
+            ✅ Transaction completed successfully
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Reference ID
+            </span>
+
+            <span class="reference-id">
+                {{ transaction[0] or "-" }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Card Number
+            </span>
+
+            <span>
+                {{ masked_card }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Transaction Type
+            </span>
+
+            <span>
+                {{ transaction[1] }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Amount
+            </span>
+
+            <span class="font-bold">
+                ₹{{ "%.2f"|format(transaction[2]) }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Date & Time
+            </span>
+
+            <span>
+                {{ transaction[3] }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Status
+            </span>
+
+            <span class="text-success font-bold">
+                ✅ Successful
+            </span>
+
+        </div>
+
+
+        <p class="text-center text-muted mt-2">
+            Thank you for using
+            ATM Management System.
+        </p>
+
+
+        <div class="button-group">
+
+            <button
+                type="button"
+                class="btn btn-success"
+                onclick="window.print()"
+            >
+                🖨️ Print Receipt
+            </button>
+
+
+            <a
+                href="{{ url_for('download_pdf') }}"
+                class="btn btn-info"
+            >
+                📄 Download PDF Report
+            </a>
+
+
+            <a
+                href="{{ url_for('export_csv') }}"
+                class="btn btn-success"
+            >
+                📊 Export CSV
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="btn btn-warning"
+            >
+                📜 Transaction History
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

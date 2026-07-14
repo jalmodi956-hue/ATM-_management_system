@@ -1,51 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fixed Deposit</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Fixed Deposit | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Fixed Deposit</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="amount">FD Amount</label>
-        <input
-            type="number"
-            id="amount"
-            name="amount"
-            placeholder="Enter FD Amount"
-            min="1"
-            step="0.01"
-            required
+    <div class="logo">
+        🏧 ATM System
+    </div>
+
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('balance') }}">
+            Balance
+        </a>
+
+        <a href="{{ url_for('interest_calculator') }}">
+            Calculator
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        🏦 Fixed Deposit
+    </h1>
+
+
+    <div class="form-container">
+
+        <p class="text-center text-muted mb-2">
+            Create a Fixed Deposit with
+            7.5% annual interest.
+        </p>
+
+
+        <div class="alert alert-info">
+            📈 Fixed annual interest rate:
+            <strong>7.5%</strong>
+        </div>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('fixed_deposit') }}"
+            id="fixedDepositForm"
         >
 
-        <label for="months">Duration (Months)</label>
-        <input
-            type="number"
-            id="months"
-            name="months"
-            placeholder="Enter Number of Months"
-            min="1"
-            required
-        >
+            <div class="form-group">
 
-        <button type="submit">Create FD</button>
-    </form>
+                <label for="amount">
+                    Deposit Amount
+                </label>
 
-    {% if success %}
-        <p><strong>{{ success }}</strong></p>
-    {% endif %}
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    min="1"
+                    step="0.01"
+                    placeholder="Enter deposit amount"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    required
+                    autofocus
+                >
 
-    {% if maturity_amount %}
-        <p><strong>Maturity Amount:</strong> ₹ {{ maturity_amount }}</p>
-    {% endif %}
+            </div>
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
-</div>
+
+            <div class="form-group">
+
+                <label for="months">
+                    Deposit Duration
+                </label>
+
+                <select
+                    id="months"
+                    name="months"
+                    required
+                >
+
+                    <option value="">
+                        Select duration
+                    </option>
+
+                    <option value="3">
+                        3 Months
+                    </option>
+
+                    <option value="6">
+                        6 Months
+                    </option>
+
+                    <option value="12">
+                        12 Months
+                    </option>
+
+                    <option value="24">
+                        24 Months
+                    </option>
+
+                    <option value="36">
+                        36 Months
+                    </option>
+
+                    <option value="60">
+                        60 Months
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="alert alert-warning">
+                ⚠️ Fixed Deposit amount will be
+                deducted from your available balance.
+            </div>
+
+
+            <div class="alert alert-info">
+                ℹ️ Your available balance will be
+                verified before creating the FD.
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success btn-block"
+            >
+                🏦 Create Fixed Deposit
+            </button>
+
+        </form>
+
+
+        {% if success %}
+
+        <div class="alert alert-success text-center">
+            ✅ {{ success }}
+        </div>
+
+        {% endif %}
+
+
+        {% if maturity_amount is not none %}
+
+        <div class="result-box">
+
+            <h2>
+                📈 FD Maturity Details
+            </h2>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    Interest Rate
+                </span>
+
+                <span class="font-bold">
+                    7.5% Per Year
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span>
+                    Maturity Amount
+                </span>
+
+                <span class="text-success font-bold maturity-amount">
+                    ₹{{ "%.2f"|format(maturity_amount) }}
+                </span>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('interest_calculator') }}"
+                class="btn btn-warning"
+            >
+                📊 Interest Calculator
+            </a>
+
+
+            <a
+                href="{{ url_for('balance') }}"
+                class="btn btn-info"
+            >
+                💰 Check Balance
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="btn"
+            >
+                📜 Transaction History
+            </a>
+
+
+            <a
+                href="{{ url_for('mini_statement') }}"
+                class="btn btn-success"
+            >
+                📄 Mini Statement
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
+
 </html>

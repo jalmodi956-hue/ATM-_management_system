@@ -1,40 +1,157 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Admin Login | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Admin Login</h2>
+<nav class="navbar">
 
-    <form method="POST">
-        <label for="username">Admin Username</label>
-        <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter Admin Username"
-            required
+    <div class="logo">
+        🏧 ATM Admin
+    </div>
+
+    <div>
+        <a href="{{ url_for('login') }}">
+            User Login
+        </a>
+
+        <a href="{{ url_for('register') }}">
+            Register
+        </a>
+
+        <a href="{{ url_for('admin_login') }}">
+            Admin Login
+        </a>
+    </div>
+
+</nav>
+
+
+<div class="login-container">
+
+    <h1>
+        🔐 Admin Login
+    </h1>
+
+    <p class="text-center text-muted mb-2">
+        Login securely to access the
+        ATM administration panel.
+    </p>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('admin_login') }}"
+        id="adminLoginForm"
+    >
+
+        <div class="form-group">
+
+            <label for="username">
+                Admin Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter admin username"
+                autocomplete="username"
+                maxlength="100"
+                required
+                autofocus
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="password">
+                Admin Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter admin password"
+                autocomplete="current-password"
+                maxlength="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="alert alert-warning">
+            ⚠️ This area is restricted to
+            authorized ATM administrators only.
+        </div>
+
+
+        <div class="alert alert-info">
+            🔐 Admin credentials are required
+            to access user and transaction management.
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-success btn-block"
         >
+            🔐 Login as Administrator
+        </button>
 
-        <label for="password">Admin Password</label>
-        <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter Admin Password"
-            required
-        >
-
-        <button type="submit">Login</button>
     </form>
 
-    <a href="/" class="back">← Back to Home</a>
+
+    <div class="auth-link">
+
+        ATM Account User?
+
+        <a href="{{ url_for('login') }}">
+            User Login
+        </a>
+
+    </div>
+
+
+    <div class="auth-link">
+
+        Don't have an ATM account?
+
+        <a href="{{ url_for('register') }}">
+            Create Account
+        </a>
+
+    </div>
+
 </div>
 
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
 </body>
+
 </html>

@@ -2,3 +2,4 @@ Flask
 reportlab
 matplotlib
 Werkzeug
+psycopg2-binary

@@ -1,35 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        My Profile | ATM Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
 
-<div class="profile-box">
-    <h2>My Profile</h2>
+<nav class="navbar">
 
-    {% if user[4] %}
-        <img src="{{ url_for('static', filename='uploads/' + user[4]) }}" alt="Profile Picture">
-    {% else %}
-        <p>No profile picture uploaded.</p>
-    {% endif %}
-
-    <div class="profile-details">
-        <p><strong>Name:</strong> {{ user[1] }}</p>
-        <p><strong>Email:</strong> {{ user[2] }}</p>
-        <p><strong>Card Number:</strong> {{ user[0] }}</p>
-        <p><strong>Balance:</strong> ₹ {{ user[3] }}</p>
+    <div class="logo">
+        🏧 ATM System
     </div>
 
-    <div class="btn-row">
-        <a href="/edit_profile" class="btn">Edit Profile</a>
-        <a href="/dashboard" class="btn btn-dark">Back to Dashboard</a>
+    <div>
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('account_details') }}">
+            Account
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
     </div>
-</div>
+
+</nav>
+
+
+<main class="container">
+
+    <h1 class="page-title">
+        👤 My Profile
+    </h1>
+
+
+    <div class="profile-card">
+
+        {% if user[4] %}
+
+        <img
+            src="{{ url_for('static', filename='uploads/' + user[4]) }}"
+            alt="Profile Picture"
+            class="profile-image"
+        >
+
+        {% else %}
+
+        <div
+            class="profile-image"
+            style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 55px;
+                background: #eff6ff;
+            "
+        >
+            👤
+        </div>
+
+        {% endif %}
+
+
+        <h2>
+            {{ user[1] }}
+        </h2>
+
+        <p class="text-muted">
+            {{ user[2] or "Email not available" }}
+        </p>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Card Number
+            </span>
+
+            <span class="font-bold">
+                **** **** {{ user[0][-4:] }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Account Holder
+            </span>
+
+            <span>
+                {{ user[1] }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Email Address
+            </span>
+
+            <span>
+                {{ user[2] or "-" }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Available Balance
+            </span>
+
+            <span class="text-success font-bold">
+                ₹{{ "%.2f"|format(user[3]) }}
+            </span>
+
+        </div>
+
+
+        <div class="receipt-row">
+
+            <span>
+                Account Status
+            </span>
+
+            <span class="text-success font-bold">
+                ✅ Active
+            </span>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <a
+                href="{{ url_for('edit_profile') }}"
+                class="btn"
+            >
+                ✏️ Edit Profile
+            </a>
+
+
+            <a
+                href="{{ url_for('change_pin') }}"
+                class="btn btn-warning"
+            >
+                🔐 Change PIN
+            </a>
+
+
+            <a
+                href="{{ url_for('account_details') }}"
+                class="btn btn-info"
+            >
+                🏦 Account Details
+            </a>
+
+
+            <a
+                href="{{ url_for('balance') }}"
+                class="btn btn-success"
+            >
+                💰 Check Balance
+            </a>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
 
 </body>
-</html>
 
+</html>

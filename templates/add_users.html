@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +10,7 @@
     >
 
     <title>
-        Edit User | ATM Management System
+        Add User | ATM Management System
     </title>
 
     <link
@@ -52,18 +51,21 @@
 <main class="container">
 
     <h1 class="page-title">
-        ✏️ Edit User
+        ➕ Add New ATM User
     </h1>
 
 
     <div class="form-container">
 
-        {% if user %}
+        <p class="text-center text-muted mb-2">
+            Create and register a new ATM user account.
+        </p>
+
 
         <form
             method="POST"
-            action="{{ url_for('edit_user', id=user[0]) }}"
-            id="editUserForm"
+            action="{{ url_for('add_user') }}"
+            id="addUserForm"
         >
 
             <div class="form-group">
@@ -76,10 +78,9 @@
                     type="text"
                     id="name"
                     name="name"
-                    value="{{ user[3] or '' }}"
                     placeholder="Enter full name"
-                    autocomplete="name"
                     maxlength="100"
+                    autocomplete="name"
                     required
                     autofocus
                 >
@@ -97,10 +98,9 @@
                     type="email"
                     id="email"
                     name="email"
-                    value="{{ user[4] or '' }}"
                     placeholder="Enter email address"
-                    autocomplete="email"
                     maxlength="150"
+                    autocomplete="email"
                     required
                 >
 
@@ -117,8 +117,7 @@
                     type="text"
                     id="card"
                     name="card"
-                    value="{{ user[1] }}"
-                    placeholder="Enter card number"
+                    placeholder="Enter numeric card number"
                     inputmode="numeric"
                     pattern="[0-9]+"
                     autocomplete="off"
@@ -132,19 +131,41 @@
             <div class="form-group">
 
                 <label for="pin">
-                    New PIN
+                    ATM PIN
                 </label>
 
                 <input
                     type="password"
                     id="pin"
                     name="pin"
-                    placeholder="Enter 4 to 6 digit new PIN"
+                    placeholder="Enter 4 to 6 digit PIN"
                     inputmode="numeric"
                     pattern="[0-9]{4,6}"
+                    autocomplete="new-password"
                     minlength="4"
                     maxlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="confirm_pin">
+                    Confirm ATM PIN
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_pin"
+                    name="confirm_pin"
+                    placeholder="Confirm ATM PIN"
+                    inputmode="numeric"
+                    pattern="[0-9]{4,6}"
                     autocomplete="new-password"
+                    minlength="4"
+                    maxlength="6"
                     required
                 >
 
@@ -154,17 +175,17 @@
             <div class="form-group">
 
                 <label for="balance">
-                    Account Balance
+                    Opening Balance
                 </label>
 
                 <input
                     type="number"
                     id="balance"
                     name="balance"
-                    value="{{ user[5] }}"
+                    value="0"
                     min="0"
                     step="0.01"
-                    placeholder="Enter account balance"
+                    placeholder="Enter opening balance"
                     inputmode="decimal"
                     autocomplete="off"
                     required
@@ -173,15 +194,23 @@
             </div>
 
 
-            <div class="alert alert-warning">
-                ⚠️ Entering a new PIN will replace
-                the user's current ATM PIN.
+            <div class="alert alert-info">
+                🔐 User PIN will be securely hashed
+                before saving.
             </div>
 
 
-            <div class="alert alert-info">
-                🔐 PIN must contain only
-                4 to 6 numeric digits.
+            <div class="alert alert-warning">
+                ⚠️ Card number and email address
+                should be unique.
+            </div>
+
+
+            <div
+                id="pinMatchError"
+                class="alert alert-danger hidden"
+            >
+                PIN and Confirm PIN do not match.
             </div>
 
 
@@ -189,28 +218,10 @@
                 type="submit"
                 class="btn btn-success btn-block"
             >
-                💾 Update User
+                ➕ Add ATM User
             </button>
 
         </form>
-
-
-        {% else %}
-
-        <div class="empty-state">
-
-            <h3>
-                👤 User Not Found
-            </h3>
-
-            <p>
-                The selected ATM user could
-                not be found.
-            </p>
-
-        </div>
-
-        {% endif %}
 
 
         <div class="button-group">
@@ -248,6 +259,55 @@
 <script
     src="{{ url_for('static', filename='script.js') }}"
 ></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form =
+        document.getElementById("addUserForm");
+
+    const pin =
+        document.getElementById("pin");
+
+    const confirmPin =
+        document.getElementById("confirm_pin");
+
+    const pinError =
+        document.getElementById("pinMatchError");
+
+
+    if (!form || !pin || !confirmPin) {
+        return;
+    }
+
+
+    form.addEventListener("submit", function (event) {
+
+        if (pin.value !== confirmPin.value) {
+
+            event.preventDefault();
+
+            if (pinError) {
+                pinError.classList.remove("hidden");
+            }
+
+            confirmPin.focus();
+
+            return;
+        }
+
+
+        if (pinError) {
+            pinError.classList.add("hidden");
+        }
+
+    });
+
+});
+
+</script>
 
 </body>
 

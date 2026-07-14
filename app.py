@@ -32,44 +32,17 @@ app = Flask(__name__)
 # ENVIRONMENT CONFIGURATION
 # ==================================================
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY") or "atm-development-secret-key-2026"
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME") or "admin"
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD") or "admin123"
 
-SENDER_EMAIL = os.environ.get("ATM_EMAIL")
-SENDER_PASSWORD = os.environ.get("ATM_EMAIL_PASSWORD")
+SENDER_EMAIL = os.environ.get("ATM_EMAIL") or ""
+SENDER_PASSWORD = os.environ.get("ATM_EMAIL_PASSWORD") or ""
 
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "atm-development-secret-key-2026"
-)
-
-DATABASE_URL = os.environ.get(
-    "DATABASE_URL",
-    "sqlite:///atm.db"
-)
-
-ADMIN_USERNAME = os.environ.get(
-    "ADMIN_USERNAME",
-    "admin"
-)
-
-ADMIN_PASSWORD = os.environ.get(
-    "ADMIN_PASSWORD",
-    "admin123"
-)
-
-SENDER_EMAIL = os.environ.get(
-    "ATM_EMAIL",
-    ""
-)
-
-SENDER_PASSWORD = os.environ.get(
-    "ATM_EMAIL_PASSWORD",
-    ""
-)
+# Flask sessions require a non-empty secret key.
+app.config["SECRET_KEY"] = SECRET_KEY
 
 # ==================================================
 # POSTGRESQL URL FIX
@@ -86,8 +59,6 @@ if DATABASE_URL.startswith("postgres://"):
 # ==================================================
 # SESSION SECURITY
 # ==================================================
-
-app.secret_key = SECRET_KEY
 
 app.permanent_session_lifetime = timedelta(minutes=10)
 
@@ -398,7 +369,9 @@ def create_database():
         conn.close()
 
 
-create_database()
+# Database initialization runs when the application starts locally.
+# For Vercel, initialize lazily once before handling the first request.
+_database_initialized = False
 
 
 # ==================================================
@@ -407,6 +380,11 @@ create_database()
 
 @app.before_request
 def make_session_permanent():
+    global _database_initialized
+
+    if not _database_initialized:
+        create_database()
+        _database_initialized = True
 
     session.permanent = True
 

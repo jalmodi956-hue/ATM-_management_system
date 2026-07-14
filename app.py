@@ -19,6 +19,9 @@ import csv
 import smtplib
 import uuid
 
+from dotenv import load_dotenv
+
+load_dotenv()
 from email.mime.text import MIMEText
 
 
@@ -32,33 +35,49 @@ app = Flask(__name__)
 # ENVIRONMENT CONFIGURATION
 # ==================================================
 
-SECRET_KEY = os.environ.get("SECRET_KEY") or "atm-development-secret-key-2026"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "atm-development-secret-key-2026"
+)
+
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME") or "admin"
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD") or "admin123"
+ADMIN_USERNAME = os.environ.get(
+    "ADMIN_USERNAME",
+    "admin"
+)
 
-SENDER_EMAIL = os.environ.get("ATM_EMAIL") or ""
-SENDER_PASSWORD = os.environ.get("ATM_EMAIL_PASSWORD") or ""
+ADMIN_PASSWORD = os.environ.get(
+    "ADMIN_PASSWORD",
+    "admin123"
+)
 
-# Flask sessions require a non-empty secret key.
-app.config["SECRET_KEY"] = SECRET_KEY
+SENDER_EMAIL = os.environ.get(
+    "ATM_EMAIL",
+    ""
+)
+
+SENDER_PASSWORD = os.environ.get(
+    "ATM_EMAIL_PASSWORD",
+    ""
+)
 
 # ==================================================
 # POSTGRESQL URL FIX
 # ==================================================
 
-if DATABASE_URL.startswith("postgres://"):
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace(
         "postgres://",
         "postgresql://",
         1
     )
 
-
 # ==================================================
 # SESSION SECURITY
 # ==================================================
+
+app.secret_key = SECRET_KEY
 
 app.permanent_session_lifetime = timedelta(minutes=10)
 
@@ -109,18 +128,21 @@ os.makedirs(
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+
 # ==================================================
 # DATABASE CONNECTION
 # ==================================================
 
 def get_conn():
+
     if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL environment variable is missing")
+        raise RuntimeError(
+            "DATABASE_URL environment variable is missing."
+        )
 
     return psycopg2.connect(
         DATABASE_URL,
-        sslmode="require",
-        connect_timeout=10
+        sslmode="require"
     )
 
 # ==================================================
@@ -369,9 +391,7 @@ def create_database():
         conn.close()
 
 
-# Database initialization runs when the application starts locally.
-# For Vercel, initialize lazily once before handling the first request.
-_database_initialized = False
+create_database()
 
 
 # ==================================================
@@ -380,11 +400,6 @@ _database_initialized = False
 
 @app.before_request
 def make_session_permanent():
-    global _database_initialized
-
-    if not _database_initialized:
-        create_database()
-        _database_initialized = True
 
     session.permanent = True
 
@@ -4303,10 +4318,8 @@ def page_not_found(error):
 # START APPLICATION
 # ==================================================
 
-if __name__ == "__main__":
-
-    app.run(
-        host="127.0.0.1",
-        port=5000,
-        debug=True
-    )
+app.run(
+    host="127.0.0.1",
+    port=5000,
+    debug=os.environ.get("VERCEL") is None
+)

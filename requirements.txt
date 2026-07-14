@@ -1,6 +1,6 @@
 Flask
-reportlab
-matplotlib
 Werkzeug
 psycopg2-binary
 reportlab
+matplotlib
+gunicorn

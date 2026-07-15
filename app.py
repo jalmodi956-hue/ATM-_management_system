@@ -234,7 +234,7 @@ def create_database():
 
                 failed_attempts INTEGER DEFAULT 0,
 
-                is_locked INTEGER DEFAULT 0,
+                is_locked BOOLEAN DEFAULT FALSE,
 
                 security_question TEXT,
 
@@ -566,9 +566,10 @@ def login():
             user_id = user[0]
             db_pin = user[2]
             failed_attempts = user[3] or 0
-            is_locked = user[4] or 0
+            is_locked = user[4] 
 
-            if is_locked == 1:
+            
+            if is_locked:            
                 return (
                     "Your account is locked due to "
                     "3 wrong PIN attempts."

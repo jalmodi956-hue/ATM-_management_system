@@ -769,22 +769,19 @@ def register():
 
             conn.commit()
 
-
         except UniqueViolation:
 
             conn.rollback()
 
-            return (
-                "Card Number Already Exists"
-            )
-            
+            return "Card Number Already Exists"
+
         except Exception as error:
 
             conn.rollback()
 
             app.logger.exception(error)
 
-            return "User Update Failed"
+            return "User Registration Failed"
 
         finally:
 

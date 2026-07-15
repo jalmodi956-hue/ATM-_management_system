@@ -3848,7 +3848,10 @@ def edit_user(id):
 
         app.logger.exception(error)
 
-        return "User Update Failed"
+        return f"""
+        <h2>User Update Failed</h2>
+        <pre>{str(error)}</pre>
+        """, 500
 
     finally:
 

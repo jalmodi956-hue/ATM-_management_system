@@ -609,7 +609,7 @@ def login():
                     UPDATE users
                     SET
                         failed_attempts=%s,
-                        is_locked=1
+                        is_locked=TRUE
                     WHERE id=%s
                     """,
                     (
@@ -901,7 +901,7 @@ def forgot_pin():
                 SET
                     pin=%s,
                     failed_attempts=0,
-                    is_locked=0
+                    is_locked=FALSE
                 WHERE card=%s
                 """,
                 (
@@ -3115,7 +3115,7 @@ def admin_dashboard():
             """
             SELECT COUNT(*)
             FROM users
-            WHERE is_locked=1
+            WHERE is_locked=TRUE
             """
         )
 
@@ -3972,7 +3972,7 @@ def unlock_user(id):
             UPDATE users
             SET
                 failed_attempts=0,
-                is_locked=0
+                is_locked=FALSE
             WHERE id=%s
             """,
             (id,)
@@ -4011,7 +4011,7 @@ def lock_user(id):
         c.execute(
             """
             UPDATE users
-            SET is_locked=1
+            SET is_locked=TRUE
             WHERE id=%s
             """,
             (id,)

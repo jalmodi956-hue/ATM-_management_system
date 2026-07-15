@@ -1,23 +1,14 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>All Users | ATM Management System</title>
 
-    <title>
-        All Users | ATM Management System
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -29,29 +20,14 @@
     </div>
 
     <div>
-        <a href="{{ url_for('admin_dashboard') }}">
-            Admin Dashboard
-        </a>
-
-        <a href="{{ url_for('all_users') }}">
-            All Users
-        </a>
-
-        <a href="{{ url_for('add_user') }}">
-            Add User
-        </a>
-
-        <a href="{{ url_for('search_user') }}">
-            Search User
-        </a>
-
-        <a href="{{ url_for('admin_logout') }}">
-            Logout
-        </a>
+        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        <a href="{{ url_for('all_users') }}">All Users</a>
+        <a href="{{ url_for('add_user') }}">Add User</a>
+        <a href="{{ url_for('search_user') }}">Search User</a>
+        <a href="{{ url_for('admin_logout') }}">Logout</a>
     </div>
 
 </nav>
-
 
 <main class="container">
 
@@ -59,11 +35,9 @@
         👥 All ATM Users
     </h1>
 
-
     <div class="alert alert-info text-center">
         👤 View and manage registered ATM users.
     </div>
-
 
     {% if users %}
 
@@ -72,137 +46,132 @@
         <input
             type="search"
             id="tableSearch"
-            placeholder="Search users by name, email or card..."
+            placeholder="Search users..."
             autocomplete="off"
             class="mb-2"
         >
-
 
         <table>
 
             <thead>
 
-                <tr>
-                    <th>No.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Card Number</th>
-                    <th>Balance</th>
-                    <th>Account Status</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Card Number</th>
+                <th>Balance</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
 
             </thead>
 
-
             <tbody>
 
-                {% for user in users %}
+            {% for user in users %}
 
-                <tr>
+            <tr>
 
-                    <td>
-                        {{ loop.index }}
-                    </td>
+                <td>{{ loop.index }}</td>
 
+                <td class="font-bold">
+                    {{ user[1] or "-" }}
+                </td>
 
-                    <td class="font-bold">
-                        {{ user[1] or "-" }}
-                    </td>
+                <td>
+                    {{ user[2] or "-" }}
+                </td>
 
+                <td>
 
-                    <td>
-                        {{ user[2] or "-" }}
-                    </td>
-
-
-                    <td>
-
-                        {% if user[3] %}
+                    {% if user[3] %}
 
                         <span class="reference-id">
-                            **** **** {{ user[3][-4:] }}
+                            **** **** {{ user[3][-4:] if user[3] else "----" }}
                         </span>
 
-                        {% else %}
+                    {% else %}
 
                         -
 
-                        {% endif %}
+                    {% endif %}
 
-                    </td>
+                </td>
 
+                <td class="text-success font-bold">
+                    ₹{{ "%.2f"|format(user[4] or 0) }}
+                </td>
 
-                    <td class="text-success font-bold">
-                        ₹{{ "%.2f"|format(user[4] or 0) }}
-                    </td>
+                <td>
 
-
-                    <td>
-
-                        {% if user[5] == 1 %}
+                    {% if user[5] == 1 %}
 
                         <span class="badge badge-danger">
                             🔒 Locked
                         </span>
 
-                        {% else %}
+                    {% else %}
 
                         <span class="badge badge-success">
                             ✅ Active
                         </span>
 
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <div class="button-group">
+
+                        <a
+                            href="{{ url_for('edit_user', id=user[0]) }}"
+                            class="btn btn-warning"
+                        >
+                            ✏️ Edit
+                        </a>
+
+                        {% if user[5] == 1 %}
+
+                        <a
+                            href="{{ url_for('unlock_user', id=user[0]) }}"
+                            class="btn btn-success"
+                        >
+                            🔓 Unlock
+                        </a>
+
                         {% endif %}
 
-                    </td>
+                        <form
+                            action="{{ url_for('delete_user', id=user[0]) }}"
+                            method="POST"
+                            style="display:inline;"
+                        >
 
-
-                    <td>
-
-                        <div class="button-group">
-
-                            <a
-                                href="{{ url_for('edit_user', id=user[0]) }}"
-                                class="btn btn-warning"
-                            >
-                                ✏️ Edit
-                            </a>
-
-
-                            {% if user[5] == 1 %}
-
-                            <a
-                                href="{{ url_for('unlock_user', id=user[0]) }}"
-                                class="btn btn-success"
-                            >
-                                🔓 Unlock
-                            </a>
-
-                            {% endif %}
-
-
-                            <a
-                                href="{{ url_for('delete_user', id=user[0]) }}"
+                            <button
+                                type="submit"
                                 class="btn btn-danger delete-user-btn"
                                 data-user-name="{{ user[1] or 'this user' }}"
                             >
                                 🗑️ Delete
-                            </a>
+                            </button>
 
-                        </div>
+                        </form>
 
-                    </td>
+                    </div>
 
-                </tr>
+                </td>
 
-                {% endfor %}
+            </tr>
+
+            {% endfor %}
 
             </tbody>
 
         </table>
 
     </div>
-
 
     {% else %}
 
@@ -213,37 +182,27 @@
         </h3>
 
         <p>
-            No registered ATM users are
-            currently available.
+            No registered ATM users are available.
         </p>
 
     </div>
 
     {% endif %}
 
-
     <div class="button-group">
 
-        <a
-            href="{{ url_for('add_user') }}"
-            class="btn btn-success"
-        >
-            ➕ Add New User
+        <a href="{{ url_for('add_user') }}"
+           class="btn btn-success">
+            ➕ Add User
         </a>
 
-
-        <a
-            href="{{ url_for('search_user') }}"
-            class="btn btn-info"
-        >
+        <a href="{{ url_for('search_user') }}"
+           class="btn btn-info">
             🔍 Search User
         </a>
 
-
-        <a
-            href="{{ url_for('admin_dashboard') }}"
-            class="btn btn-dark"
-        >
+        <a href="{{ url_for('admin_dashboard') }}"
+           class="btn btn-dark">
             ← Back to Admin Dashboard
         </a>
 
@@ -251,35 +210,23 @@
 
 </main>
 
-
-<script
-    src="{{ url_for('static', filename='script.js') }}"
-></script>
-
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const deleteButtons =
-        document.querySelectorAll(".delete-user-btn");
+    document.querySelectorAll(".delete-user-btn").forEach(function(button){
 
+        button.addEventListener("click", function(event){
 
-    deleteButtons.forEach(function (button) {
-
-        button.addEventListener("click", function (event) {
-
-            const userName =
-                this.dataset.userName || "this user";
-
-            const confirmed = confirm(
+            const ok = confirm(
                 "Are you sure you want to delete " +
-                userName +
-                "? This action cannot be undone."
+                (this.dataset.userName || "this user") +
+                " ?"
             );
 
-
-            if (!confirmed) {
+            if(!ok){
                 event.preventDefault();
             }
 
@@ -292,5 +239,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-
 </html>

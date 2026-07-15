@@ -12,6 +12,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from reportlab.pdfgen import canvas
 from psycopg2.errors import UniqueViolation
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
 
 import psycopg2
 import os
@@ -19,29 +21,27 @@ import csv
 import smtplib
 import uuid
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
-from email.mime.text import MIMEText
-
-
 # ==================================================
 # FLASK APPLICATION
 # ==================================================
+load_dotenv ()
+
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = SECRET_KEY
+# ============================
+# SECRET KEY
+# ============================
+
+app.config["SECRET_KEY"] = os.getenv(
+    "SECRET_KEY",
+    "atm-development-secret-key"
+)
+
+app.secret_key = app.config["SECRET_KEY"]
 
 # ==================================================
 # ENVIRONMENT CONFIGURATION
 # ==================================================
-
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "atm-development-secret-key-2026"
-)
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
@@ -79,8 +79,6 @@ if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
 # ==================================================
 # SESSION SECURITY
 # ==================================================
-
-app.secret_key = SECRET_KEY
 
 app.permanent_session_lifetime = timedelta(minutes=10)
 
@@ -142,21 +140,20 @@ def get_conn():
         raise RuntimeError(
             "DATABASE_URL environment variable is missing."
         )
-
+    
     return psycopg2.connect(
         DATABASE_URL,
-        sslmode="require"
-    )
+        sslmode="require",
+        connect_timeout=10
+)
 
 # ==================================================
 # CURRENT DATE TIME
 # ==================================================
 
 def get_current_datetime():
-
-    return datetime.now().strftime(
-        "%d-%m-%Y %H:%M:%S"
-    )
+    # Return current date and time as formatted string
+    return datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
 
 # ==================================================
@@ -380,10 +377,7 @@ def create_database():
 
         conn.rollback()
 
-        print(
-            "DATABASE SETUP ERROR:",
-            error
-        )
+        app.logger.exception(error)
 
         raise
 
@@ -393,8 +387,8 @@ def create_database():
 
         conn.close()
 
-
-create_database()
+with app.app_context():
+    create_database()
 
 
 # ==================================================
@@ -406,6 +400,16 @@ def make_session_permanent():
 
     session.permanent = True
 
+# ==================================================
+# SECURITY HEADERS
+# ==================================================
+
+@app.after_request
+def security_headers(response):
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
 
 # ==================================================
 # EMAIL RECEIPT
@@ -427,21 +431,15 @@ def send_email_receipt(
             "Email skipped: Email configuration missing"
         )
 
-        return
-
+        return False
 
     try:
 
-        msg = MIMEText(
-            message
-        )
+        msg = MIMEText(message)
 
         msg["Subject"] = subject
-
         msg["From"] = SENDER_EMAIL
-
         msg["To"] = to_email
-
 
         with smtplib.SMTP(
             "smtp.gmail.com",
@@ -462,15 +460,11 @@ def send_email_receipt(
                 msg.as_string()
             )
 
+        return True
 
     except Exception as error:
-
-        print(
-            "EMAIL ERROR:",
-            error
-        )
-
-
+        app.logger.exception(error)
+        return False   
 # ==================================================
 # ADD TRANSACTION HELPER
 # ==================================================
@@ -549,9 +543,7 @@ def login():
 
         c = conn.cursor()
 
-
         try:
-
             c.execute(
                 """
                 SELECT
@@ -566,49 +558,25 @@ def login():
                 (card,)
             )
 
-
             user = c.fetchone()
 
-
             if not user:
-
                 return "Card Number Not Found"
 
-
             user_id = user[0]
-
             db_pin = user[2]
-
-            failed_attempts = (
-                user[3] or 0
-            )
-
-            is_locked = (
-                user[4] or 0
-            )
-
+            failed_attempts = user[3] or 0
+            is_locked = user[4] or 0
 
             if is_locked == 1:
-
                 return (
                     "Your account is locked due to "
                     "3 wrong PIN attempts."
                 )
 
-
-            if check_password_hash(
-                db_pin,
-                pin
-            ):
-
-                last_login = (
-                    get_current_datetime()
-                )
-
-                login_ip = (
-                    request.remote_addr
-                )
-
+            if check_password_hash(db_pin, pin):
+                last_login = get_current_datetime()
+                login_ip = request.remote_addr
 
                 c.execute(
                     """
@@ -626,27 +594,16 @@ def login():
                     )
                 )
 
-
                 conn.commit()
 
-
-                session.clear()
-
                 session["card"] = card
-
                 session.permanent = True
 
-
-                return redirect(
-                    "/dashboard"
-                )
-
+                return redirect("/dashboard")
 
             failed_attempts += 1
 
-
             if failed_attempts >= 3:
-
                 c.execute(
                     """
                     UPDATE users
@@ -660,16 +617,8 @@ def login():
                         user_id
                     )
                 )
-
-
                 conn.commit()
-
-
-                return (
-                    "Account Locked! "
-                    "Wrong PIN entered 3 times."
-                )
-
+                return "Account Locked! Wrong PIN entered 3 times."
 
             c.execute(
                 """
@@ -682,27 +631,13 @@ def login():
                     user_id
                 )
             )
-
-
             conn.commit()
-
-
-            return (
-                f"Wrong PIN! "
-                f"Attempt {failed_attempts}/3"
-            )
-
-
+            return f"Wrong PIN! Attempt {failed_attempts}/3"
         finally:
-
             c.close()
-
             conn.close()
 
-
-    return render_template(
-        "login.html"
-    )
+    return render_template("login.html")
 
 
 # ==================================================
@@ -841,7 +776,14 @@ def register():
             return (
                 "Card Number Already Exists"
             )
+            
+        except Exception as error:
 
+            conn.rollback()
+
+            app.logger.exception(error)
+
+            return "User Update Failed"
 
         finally:
 
@@ -1085,6 +1027,20 @@ def dashboard():
         c.close()
         conn.close()
 
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/")
+
+
+@app.route("/admin_logout")
+def admin_logout():
+
+    session.clear()
+
+    return redirect("/")
 
 # ==================================================
 # BALANCE
@@ -1113,7 +1069,7 @@ def balance():
         user = c.fetchone()
 
         if not user:
-            session.clear()
+            session.modified = True
             return redirect("/")
 
         return render_template(
@@ -1200,36 +1156,35 @@ def deposit():
 
             new_balance = user[1]
 
+            # send receipt and redirect on success
+            send_email_receipt(
+                user_email,
+                "ATM Deposit Receipt",
+                (
+                    "Dear User,\n\n"
+                    "Deposit Successful.\n\n"
+                    f"Reference ID: {reference_id}\n"
+                    f"Amount: INR {amount:.2f}\n"
+                    f"Balance: INR {new_balance:.2f}\n"
+                    f"Date: {get_current_datetime()}"
+                )
+            )
+
+            return redirect(
+                "/receipt"
+            )
+
         except Exception as error:
 
             conn.rollback()
 
-            print(
-                "DEPOSIT ERROR:",
-                error
-            )
+            app.logger.exception(error)
 
-            return "Deposit Failed"
+            return "Fixed Deposit Failed"
 
         finally:
-
             c.close()
             conn.close()
-
-        send_email_receipt(
-            user_email,
-            "ATM Deposit Receipt",
-            (
-                "Dear User,\n\n"
-                "Deposit Successful.\n\n"
-                f"Reference ID: {reference_id}\n"
-                f"Amount: INR {amount:.2f}\n"
-                f"Balance: INR {new_balance:.2f}\n"
-                f"Date: {get_current_datetime()}"
-            )
-        )
-
-        return redirect("/receipt")
 
     return render_template(
         "deposit.html"
@@ -1401,23 +1356,14 @@ def process_withdrawal(
 
         return (
             True,
-            (
-                f"Withdrawal Successful. "
-                f"Reference ID: {reference_id}"
-            ),
+            f"Withdrawal Successful. Reference ID: {reference_id}",
             user_email,
             new_balance
         )
 
     except Exception as error:
-
         conn.rollback()
-
-        print(
-            "WITHDRAWAL ERROR:",
-            error
-        )
-
+        app.logger.exception(error)
         return (
             False,
             "Transaction Failed",
@@ -1426,7 +1372,6 @@ def process_withdrawal(
         )
 
     finally:
-
         c.close()
         conn.close()
 
@@ -1488,7 +1433,9 @@ def withdraw():
             )
         )
 
-        return redirect("/receipt")
+        return redirect(
+    "/receipt"
+)
 
     return render_template(
         "withdraw.html"
@@ -1560,7 +1507,9 @@ def fast_cash():
             )
         )
 
-        return redirect("/receipt")
+        return redirect(
+    "/receipt"
+)
 
     return render_template(
         "fast_cash.html",
@@ -1742,10 +1691,7 @@ def transfer():
 
             conn.rollback()
 
-            print(
-                "TRANSFER ERROR:",
-                error
-            )
+            app.logger.exception(error)
 
             return "Money Transfer Failed"
 
@@ -1768,13 +1714,13 @@ def transfer():
             )
         )
 
-        return redirect("/receipt")
+        return redirect(
+    "/receipt"
+)
 
     return render_template(
         "transfer.html"
     )
-
-
 # ==================================================
 # FIXED DEPOSIT
 # ==================================================
@@ -1916,10 +1862,7 @@ def fixed_deposit():
 
             conn.rollback()
 
-            print(
-                "FIXED DEPOSIT ERROR:",
-                error
-            )
+            app.logger.exception(error)
 
             return "Fixed Deposit Failed"
 
@@ -2337,7 +2280,7 @@ def account_details():
         user = c.fetchone()
 
         if not user:
-            session.clear()
+            session.modified = True
             return redirect("/")
 
         return render_template(
@@ -2383,7 +2326,7 @@ def profile():
         user = c.fetchone()
 
         if not user:
-            session.clear()
+            session.modified = True
             return redirect("/")
 
         return render_template(
@@ -2534,7 +2477,7 @@ def edit_profile():
         user = c.fetchone()
 
         if not user:
-            session.clear()
+            session.modified = True
             return redirect("/")
 
         return render_template(
@@ -3121,7 +3064,7 @@ def admin_login():
             and password_valid
         ):
 
-            session.clear()
+            session.modified = True
 
             session["admin"] = True
 
@@ -3139,21 +3082,6 @@ def admin_login():
     return render_template(
         "admin_login.html"
     )
-
-
-# ==================================================
-# ADMIN LOGOUT
-# ==================================================
-
-@app.route("/admin_logout")
-def admin_logout():
-
-    session.clear()
-
-    return redirect(
-        "/admin_login"
-    )
-
 
 # ==================================================
 # ADMIN DASHBOARD
@@ -3910,27 +3838,19 @@ def edit_user(id):
             user=user
         )
 
-
     except UniqueViolation:
 
         conn.rollback()
 
-        return (
-            "Card Number Already Exists"
-        )
-
+        return "Card Number Already Exists"
 
     except Exception as error:
 
         conn.rollback()
 
-        print(
-            "EDIT USER ERROR:",
-            error
-        )
+        app.logger.exception(error)
 
         return "User Update Failed"
-
 
     finally:
 
@@ -4015,23 +3935,13 @@ def delete_user(id):
 
         conn.commit()
 
-
-        return redirect(
-            "/all_users"
-        )
-
-
     except Exception as error:
 
         conn.rollback()
 
-        print(
-            "DELETE USER ERROR:",
-            error
-        )
+        app.logger.exception(error)
 
         return "User Delete Failed"
-
 
     finally:
 
@@ -4277,18 +4187,13 @@ def admin_fixed_deposits():
         c.close()
         conn.close()
 
-
 # ==================================================
-# USER LOGOUT
+# HEALTH CHECK
 # ==================================================
 
-@app.route("/logout")
-def logout():
-
-    session.clear()
-
-    return redirect("/")
-
+@app.route("/health")
+def health():
+    return "OK", 200
 
 # ==================================================
 # ERROR HANDLER - FILE TOO LARGE
@@ -4321,8 +4226,7 @@ def page_not_found(error):
 # START APPLICATION
 # ==================================================
 
-app.run(
-    host="127.0.0.1",
-    port=5000,
-    debug=os.environ.get("VERCEL") is None
-)
+if __name__ == "__main__":
+    app.run(
+        debug=True
+    )

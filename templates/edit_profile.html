@@ -4,19 +4,13 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Edit Profile | ATM Management System
-    </title>
+    <title>Edit Profile | ATM Management System</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -28,21 +22,10 @@
     </div>
 
     <div>
-        <a href="{{ url_for('dashboard') }}">
-            Dashboard
-        </a>
-
-        <a href="{{ url_for('profile') }}">
-            Profile
-        </a>
-
-        <a href="{{ url_for('account_details') }}">
-            Account
-        </a>
-
-        <a href="{{ url_for('logout') }}">
-            Logout
-        </a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('account_details') }}">Account</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 
 </nav>
@@ -59,50 +42,25 @@
 
         {% if user %}
 
-
-        {% if user[3] %}
-
-        <img
-            src="{{ url_for('static', filename='uploads/' + user[3]) }}"
-            alt="Profile Picture"
-            class="profile-image"
-            id="profilePreview"
-        >
-
-        {% else %}
-
-        <div
-            class="profile-image"
-            id="defaultProfile"
-            style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: auto;
-                margin-right: auto;
-                font-size: 55px;
-                background: #eff6ff;
-            "
-        >
+        <div class="profile-image"
+             style="
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                margin:auto;
+                width:120px;
+                height:120px;
+                border-radius:50%;
+                background:#eff6ff;
+                font-size:60px;
+             ">
             👤
         </div>
 
-        <img
-            src=""
-            alt="Profile Preview"
-            class="profile-image hidden"
-            id="profilePreview"
-        >
 
-        {% endif %}
-
-
-        <form
-            method="POST"
-            action="{{ url_for('edit_profile') }}"
-            enctype="multipart/form-data"
-            id="editProfileForm"
-        >
+        <form method="POST"
+              action="{{ url_for('edit_profile') }}"
+              id="editProfileForm">
 
             <div class="form-group">
 
@@ -114,8 +72,7 @@
                     type="text"
                     id="card"
                     value="{{ user[0] }}"
-                    disabled
-                >
+                    disabled>
 
             </div>
 
@@ -131,12 +88,8 @@
                     id="name"
                     name="name"
                     value="{{ user[1] or '' }}"
-                    placeholder="Enter full name"
                     maxlength="100"
-                    autocomplete="name"
-                    required
-                    autofocus
-                >
+                    required>
 
             </div>
 
@@ -152,58 +105,26 @@
                     id="email"
                     name="email"
                     value="{{ user[2] or '' }}"
-                    placeholder="Enter email address"
                     maxlength="150"
-                    autocomplete="email"
-                    required
-                >
+                    required>
 
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="profile_pic">
-                    Profile Picture
-                </label>
-
-                <input
-                    type="file"
-                    id="profile_pic"
-                    name="profile_pic"
-                    accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
-                >
-
-                <small class="text-muted">
-                    PNG, JPG, JPEG or WEBP.
-                    Maximum file size: 2 MB.
-                </small>
-
-            </div>
-
-
-            <div
-                id="profileImageError"
-                class="alert alert-danger hidden"
-            >
             </div>
 
 
             <div class="alert alert-info">
-                👤 Update your name, email
-                or profile picture.
+                👤 Update your profile information.
             </div>
 
 
             <button
                 type="submit"
-                class="btn btn-success btn-block"
-            >
-                💾 Save Profile Changes
+                class="btn btn-success btn-block">
+
+                💾 Save Changes
+
             </button>
 
         </form>
-
 
         {% else %}
 
@@ -214,8 +135,7 @@
             </h3>
 
             <p>
-                Your ATM user profile
-                could not be found.
+                User profile not found.
             </p>
 
         </div>
@@ -225,34 +145,23 @@
 
         <div class="button-group">
 
-            <a
-                href="{{ url_for('profile') }}"
-                class="btn btn-info"
-            >
+            <a href="{{ url_for('profile') }}"
+               class="btn btn-info">
                 👤 My Profile
             </a>
 
-
-            <a
-                href="{{ url_for('change_pin') }}"
-                class="btn btn-warning"
-            >
+            <a href="{{ url_for('change_pin') }}"
+               class="btn btn-warning">
                 🔐 Change PIN
             </a>
 
-
-            <a
-                href="{{ url_for('account_details') }}"
-                class="btn btn-success"
-            >
+            <a href="{{ url_for('account_details') }}"
+               class="btn btn-success">
                 🏦 Account Details
             </a>
 
-
-            <a
-                href="{{ url_for('dashboard') }}"
-                class="btn btn-dark"
-            >
+            <a href="{{ url_for('dashboard') }}"
+               class="btn btn-dark">
                 ← Back to Dashboard
             </a>
 
@@ -262,125 +171,7 @@
 
 </main>
 
-
-<script
-    src="{{ url_for('static', filename='script.js') }}"
-></script>
-
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const profileInput =
-        document.getElementById("profile_pic");
-
-    const profilePreview =
-        document.getElementById("profilePreview");
-
-    const defaultProfile =
-        document.getElementById("defaultProfile");
-
-    const imageError =
-        document.getElementById("profileImageError");
-
-
-    if (!profileInput || !profilePreview) {
-        return;
-    }
-
-
-    profileInput.addEventListener(
-        "change",
-        function () {
-
-            const file = this.files[0];
-
-            if (imageError) {
-                imageError.classList.add("hidden");
-                imageError.textContent = "";
-            }
-
-
-            if (!file) {
-                return;
-            }
-
-
-            const allowedTypes = [
-                "image/png",
-                "image/jpeg",
-                "image/webp"
-            ];
-
-
-            if (!allowedTypes.includes(file.type)) {
-
-                this.value = "";
-
-                if (imageError) {
-                    imageError.textContent =
-                        "Please select a PNG, JPG, JPEG or WEBP image.";
-
-                    imageError.classList.remove("hidden");
-                }
-
-                return;
-            }
-
-
-            const maxSize =
-                2 * 1024 * 1024;
-
-
-            if (file.size > maxSize) {
-
-                this.value = "";
-
-                if (imageError) {
-                    imageError.textContent =
-                        "Profile picture must be 2 MB or smaller.";
-
-                    imageError.classList.remove("hidden");
-                }
-
-                return;
-            }
-
-
-            const imageURL =
-                URL.createObjectURL(file);
-
-
-            profilePreview.src = imageURL;
-
-            profilePreview.classList.remove(
-                "hidden"
-            );
-
-
-            if (defaultProfile) {
-
-                defaultProfile.classList.add(
-                    "hidden"
-                );
-
-            }
-
-
-            profilePreview.onload = function () {
-
-                URL.revokeObjectURL(imageURL);
-
-            };
-
-        }
-    );
-
-});
-
-</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
-
 </html>
